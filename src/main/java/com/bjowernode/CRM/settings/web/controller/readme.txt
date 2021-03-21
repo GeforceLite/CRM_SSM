@@ -1,1 +1,3 @@
 想用Servlet的request和response对象就必须在controller里面进行操作
+Controler层：
+Controler负责请求转发，接受页面过来的参数，传给Service处理，接到返回值，再传给页面。
