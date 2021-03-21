@@ -1,0 +1,1 @@
+想用Servlet的request和response对象就必须在controller里面进行操作
