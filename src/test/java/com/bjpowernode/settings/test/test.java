@@ -1,6 +1,7 @@
 package com.bjpowernode.settings.test;
 
 import com.bjowernode.CRM.utils.DateTimeUtil;
+import com.bjowernode.CRM.utils.MD5Util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,7 +10,6 @@ public class test {
         //传统写法
         /*
         验证失效时间
-
         //获取系统时间
         Date date = new Date();
         //时间格式
@@ -23,12 +23,18 @@ public class test {
         if (lockTime.equals("0")) {
             System.out.println("异常账号锁定");
         }*/
+        /*
+        ip拦截测试
         String ip = "192.168.1.1";
         String allowIps = "192.168.1.1,192.168.1.2";
         if (allowIps.contains(ip)) {
             System.out.println("允许登陆");
         } else {
             System.out.println("ip受限，请联系管理员");
-        }
+        }*/
+        /*
+        MD5加密密码测试
+        String MD5 = "123";
+        System.out.println(MD5Util.getMD5(MD5));*/
     }
 }
