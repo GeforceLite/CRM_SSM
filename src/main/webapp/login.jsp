@@ -15,8 +15,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			//在页面加载完毕后，让用户文本框自动获得焦点
 			$("#loginAct").focus();
 			//为登录按钮绑定事件，执行登陆操作
-			$("submitBtn").click(function () {
-				alert("执行验证登陆操作")
+			$("#submitBtn").click(function () {
+				alert("执行验证登陆操作");
 			});
 		});
 
