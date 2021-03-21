@@ -4,10 +4,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<properties resource="db.properties"/>
-	
 	<typeAliases>
-		<!--起别名-->
-		<!-- <typeAlias type="com.bjpowernode.mybatis.domain.Student" alias="student"/> -->
+		<package name="com.bjowernode.CRM.settings.domain"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -26,5 +24,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mappers>
 		<!--注册中心-->
 		<!-- <mapper resource="com/bjpowernode/mybatis/dao/StudentDao.xml" /> -->
+		<package name="com.bjowernode.CRM.settings.dao"/>
 	</mappers>
 </configuration>
