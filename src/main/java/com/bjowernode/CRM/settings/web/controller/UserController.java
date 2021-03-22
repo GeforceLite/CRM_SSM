@@ -15,11 +15,16 @@ public class UserController extends HttpServlet {
         String path = request.getServletPath();
         //进行判断
         //注意，setting路径前有/，非常容易出错
-        if ("/settings/user/xxx.do".equals(path)) {
+        if ("/settings/user/login.do".equals(path)) {
             //传对应的方法
             //xxx.(request,response)
-        } else if ("/settings/user/xxx.do".equals(path)) {
+            login(request, response);
+        } else if ("/settings/user/login.do".equals(path)) {
 
         }
+    }
+
+    private void login(HttpServletRequest request, HttpServletResponse response) {
+
     }
 }

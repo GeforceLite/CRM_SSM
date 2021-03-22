@@ -31,19 +31,41 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			})
 		})
 		//封装好登陆函数,写在外面作用域更广，一定写在$function () 的外面
-		function login(){
+		function login() {
 			//验证账户密码不能为空
 			//将文本中的左右空格去掉，使用$.trim(代码)方法
 			var loginAct = $.trim($("#loginAct").val());
 			var loginPwd = $.trim($("#loginPwd").val());
-			if (loginAct=="" || loginPwd=="") {
+			if (loginAct == "" || loginPwd == "") {
 				/*为什么用html，就是因为要在msg这个标签里面放内容了，所以要用html*/
 				$("#msg").html("账号密码不能为空");
 				//如果账号密码为空，则需要及时强制终止该方法
 				return false;
 			}
-		}
+			//去后台验证登陆操作
+			$.ajax({
+				url: "settings/user/login.do",
+				data: {
+					loginAct: loginAct,
+					loginPwd: loginPwd
+				},
+				type: "String",
+				dataType: "json",
+				success: function (data) {
+					/*data{
+						"success":"true/false"
+						"msg":错哪了
+					}*/
+					//登录状态判断
+					if (data.success) {
+						//跳转菜单页
 
+					} else {
+						//登陆失败，从后台json串拿到错误信息
+					}
+				}
+			})
+		}
 	</script>
 </head>
 <body>

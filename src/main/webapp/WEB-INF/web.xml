@@ -13,6 +13,6 @@
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
     <!--<url-pattern>起名要以模块/功能为主-->
-    <url-pattern>/settings/user/xxx.do</url-pattern>
+    <url-pattern>/settings/user/login.do</url-pattern>
   </servlet-mapping>
 </web-app>
