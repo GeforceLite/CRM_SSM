@@ -25,6 +25,8 @@ public class UserController extends HttpServlet {
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) {
-
+        System.out.println("进入验证操作");
+        String loginAct = request.getParameter("loginAct");
+        String loginPwd = request.getParameter("loginPwd");
     }
 }
