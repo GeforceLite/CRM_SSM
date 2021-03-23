@@ -46,10 +46,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			$.ajax({
 				url: "settings/user/login.do",
 				data: {
-					loginAct: loginAct,
-					loginPwd: loginPwd
+					"loginAct": loginAct,
+					"loginPwd": loginPwd
 				},
-				type: "String",
+				type: "post",
 				dataType: "json",
 				success: function (data) {
 					/*data{
@@ -59,7 +59,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					//登录状态判断
 					if (data.success) {
 						//跳转菜单页
-
+						window.location.href = "workbench/index.html";
 					} else {
 						//登陆失败，从后台json串拿到错误信息
 					}
