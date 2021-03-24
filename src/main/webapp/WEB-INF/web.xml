@@ -7,7 +7,7 @@
   </welcome-file-list>
 
   <!--过滤器注册要放在Servlet注册之前才好过滤-->
-  <filter>
+  <filter><!--编码过滤器-->
     <filter-name>EncodingFilter</filter-name>
     <filter-class>com.bjowernode.CRM.web.filter.EncodingFilter</filter-class>
   </filter>
@@ -18,7 +18,17 @@
     只需要对.do后缀的Servlet进行过滤即可，后缀的文件名不要加/-->
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
-
+<!--恶意请求过滤器-->
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.bjowernode.CRM.web.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <!--过滤一个前端的.jsp文件和后台的.do的Servlet就够了，其他的像css,图片之类的，没有必要管-->
+    <url-pattern>*.jsp</url-pattern>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
   <!--Servlet注册中心-->
   <servlet>
     <servlet-name>UserController</servlet-name>
