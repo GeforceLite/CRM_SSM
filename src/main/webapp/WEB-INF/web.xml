@@ -5,6 +5,20 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+
+  <!--过滤器注册要放在Servlet注册之前才好过滤-->
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>com.bjowernode.CRM.web.filter.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <!--<url-pattern></url-pattern>里放的是要过滤哪些Servlet，正常前端也要过滤一下
+    但是前端jsp里面已经设置好UTF-8的编码格式了，所以不需要再过滤了，提升效率
+    只需要对.do后缀的Servlet进行过滤即可，后缀的文件名不要加/-->
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
   <!--Servlet注册中心-->
   <servlet>
     <servlet-name>UserController</servlet-name>

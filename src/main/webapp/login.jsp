@@ -62,6 +62,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						window.location.href = "workbench/index.html";
 					} else {
 						//登陆失败，从后台json串拿到错误信息
+						$("#msg").html(data.msg);
 					}
 				}
 			})
