@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>CRM</display-name>
+
+  <!--
+     起名规范
+     add/create:跳转到添加页，或者打开添加操作的模态窗口
+     save:执行添加操作
+     edit:跳转到修改页，或者打开修改操作的模态窗口
+     update:执行修改操作
+     get:执行查询操作   find/select/query/...
+     特殊操作 login等
+   -->
+
  <!-- 欢迎页，所有开发者约定俗成-->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+
 
   <!--过滤器注册要放在Servlet注册之前才好过滤-->
   <filter><!--编码过滤器-->
@@ -18,7 +30,7 @@
     只需要对.do后缀的Servlet进行过滤即可，后缀的文件名不要加/-->
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
-<!--恶意请求过滤器-->
+  <!--恶意请求过滤器-->
   <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.bjowernode.CRM.web.filter.LoginFilter</filter-class>
@@ -29,7 +41,10 @@
     <url-pattern>*.jsp</url-pattern>
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
-  <!--Servlet注册中心-->
+
+
+
+  <!--Servlet用户控制器-->
   <servlet>
     <servlet-name>UserController</servlet-name>
     <servlet-class>com.bjowernode.CRM.settings.web.controller.UserController</servlet-class>
@@ -39,4 +54,18 @@
     <!--<url-pattern>起名要以模块/功能为主-->
     <url-pattern>/settings/user/login.do</url-pattern>
   </servlet-mapping>
+
+  <!--市场活动控制器-->
+  <servlet>
+    <servlet-name>ActivityController</servlet-name>
+    <servlet-class>com.bjowernode.CRM.workbench.web.controller.ActivityController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/xxx.do</url-pattern>
+  </servlet-mapping>
+
+
+
+
 </web-app>

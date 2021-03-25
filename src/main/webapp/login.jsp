@@ -12,6 +12,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 	<script>
 		$(function () {
+			//设置为顶层窗口，防止工作台刷新就回到登录页面
+			if (window.top != window) {
+				window.top.location = window.location;
+			}
 			//加载完毕后清空文本框内容
 			$("#loginAct").val("");
 			//在页面加载完毕后，让用户文本框自动获得焦点
