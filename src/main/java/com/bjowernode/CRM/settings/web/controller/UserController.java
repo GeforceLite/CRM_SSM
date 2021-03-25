@@ -2,11 +2,10 @@ package com.bjowernode.CRM.settings.web.controller;
 
 import com.bjowernode.CRM.settings.domain.User;
 import com.bjowernode.CRM.settings.service.UserService;
-import com.bjowernode.CRM.settings.service.UserServiceImpl;
+import com.bjowernode.CRM.settings.service.impl.UserServiceImpl;
 import com.bjowernode.CRM.utils.MD5Util;
 import com.bjowernode.CRM.utils.PrintJson;
 import com.bjowernode.CRM.utils.ServiceFactory;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,8 +50,8 @@ public class UserController extends HttpServlet {
             //如果登陆失败了，直接跳到catch块了，不会跳到下一步的setAttribute里面
             User user = userService.login(loginAct, loginPwd, ip);
             request.getSession().setAttribute("user",user);
-            //如果登陆成功，返回一个json,全手动敲返回信息太费劲了，所以引入了工具类
-            /*{"success":true}正常要拼一大串这样的引入工具后就会好写
+            /*如果登陆成功，返回一个json,全手动敲返回信息太费劲了，所以引入了工具类
+            {"success":true}正常要拼一大串这样的引入工具后就会好写
             * PrintJson Class类直接调用方法传参拿结果就好，这里是登陆成功情况，如果不成功就
             * 跳到catch块里了，所以这里第二个参数填入的是true
             * */

@@ -1,8 +1,9 @@
-package com.bjowernode.CRM.settings.service;
+package com.bjowernode.CRM.settings.service.impl;
 
 import com.bjowernode.CRM.settings.dao.UserDao;
 import com.bjowernode.CRM.settings.domain.User;
 import com.bjowernode.CRM.settings.exception.LoginException;
+import com.bjowernode.CRM.settings.service.UserService;
 import com.bjowernode.CRM.utils.DateTimeUtil;
 import com.bjowernode.CRM.utils.SqlSessionUtil;
 

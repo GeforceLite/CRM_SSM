@@ -1,19 +1,10 @@
 package com.bjowernode.CRM.workbench.web.controller;
 
-import com.bjowernode.CRM.settings.domain.User;
-import com.bjowernode.CRM.settings.service.UserService;
-import com.bjowernode.CRM.settings.service.UserServiceImpl;
-import com.bjowernode.CRM.utils.MD5Util;
-import com.bjowernode.CRM.utils.PrintJson;
-import com.bjowernode.CRM.utils.ServiceFactory;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 //这里是控制器，日后由Spring负责编写
 public class ActivityController extends HttpServlet {
