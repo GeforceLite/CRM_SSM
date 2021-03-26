@@ -10,7 +10,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
-
+<%--工具包的导入顺序也很重要，就比如要先有JQuery，再有bootstrap，再有bootstrap的日历控件
+顺序如果错了，自然就崩了--%>
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
@@ -21,10 +22,94 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	$(function(){
 		//为创建按钮绑定事件，打开添加操作的模态窗口
 		$("#addBtn").click(function () {
-			//先获取模态窗口的jQuery对象，调用modal方法，为方法传递参数 show:打开模态窗口 hiden:关闭模态窗口
-			/*测试代码，弹窗alert(123)，这里就是把代码写活了，可以通过jQuery进行修改，按钮的行为由我们决定*/
-			$("#createActivityModal").modal("show");
+			//启动日历控件.time是选择日期类，因为有多处日期类的框
+			//class里面加内容就用空格隔开就行，例如class="a b"就代表了有两个类
+			//a是一个单独的类，b也是一个单独的类，类不兴乱改，改完就容易丢失样式
+			$(".time").datetimepicker({
+				minView: "month",
+				language:  'zh-CN',
+				format: 'yyyy-mm-dd',
+				autoclose: true,
+				todayBtn: true,
+				pickerPosition: "bottom-left"
+			});
 
+			//先获取模态窗口的jQuery对象，调用modal方法，为方法传递参数 show:打开模态窗口 hide:关闭模态窗口
+			/*测试代码，弹窗alert(123)，这里就是把代码写活了，可以通过jQuery进行修改，按钮的行为由我们决定*/
+			//做一个ajax请求，来走Mybatis实现联级查询
+			$.ajax({
+				url:"workbench/activity/getUserList.do",
+				data:{
+					//无脑查全部，不用传数据
+				},
+				type: "get",//添加修改删除密码相关操作用post，剩下的正常取值用get就行
+				dataType: "json",
+				success : function (data){
+					var html="<option></option>"
+					/*遍历从后台传来的数据，然后拼接解析成下拉列表的代码，在html内容展示出来
+					* $.each(array,function(index,item){…})
+					array = 数组 ， index = 下标 ， item = 对应的值*/
+					$.each(data,function (i,n){
+						//value是那个下拉框的id值,用于根据id选择下拉框
+						html+="<option value='"+n.id+"'>"+n.name+"</option>";
+					})
+					/*遍历完拼接结束，通过html把代码拼接出来，再唤醒模态窗口*/
+					$("#create-owner").html(html);
+				//将当前登录的用户设置为默认下拉的选项，提升体验
+				//将当前登录的用户，设置为下拉框默认的选项
+				/*怎么让下拉列表默认选中某一项？
+					$("#grade").val("2");
+					<select id="grade">
+						<option value="1">高中</option>
+						<option value="2">专科</option>
+						<option value="3">本科</option>
+					</select>*/
+					/*  <select id="create-owner">
+							<option value="40f6cdea0bd34aceb77492a1656d9fb3">张三</option>
+							<option value="06f5fc056eac41558a964f96daa7f27c">李四</option>
+						</select>
+						$("#create-owner").val("40f6cdea0bd34aceb77492a1656d9fb3");
+						肯定不能这么写，所以要改
+					 */
+					//取得当前登录用户的id,从sessionScope里拿id
+					//在js中使用el表达式，el表达式一定要套用在字符串中
+					var id = "${sessionScope.user.id}";
+					//选中id
+					$("#create-owner").val(id);
+					$("#createActivityModal").modal("show");
+				}
+			})
+		});
+
+
+
+		//为保存按钮添加事件
+		$("#saveBtn").click(function () {
+			$.ajax({
+				url: "workbench/activity/save.do",
+				data: {
+
+					"owner": $.trim("#create-owner".val()),
+					"name": $.trim("#create-name".val()),
+					"startDate": $.trim("#create-startDate".val()),
+					"endDate": $.trim("#create-endDate".val()),
+					"cost": $.trim("#create-cost".val()),
+					"description": $.trim("#create-description".val())
+
+				},
+				type: "post",
+				dataType: "json",
+				success:function (data){
+					//只确定添加删除结果是否成功就行
+					if (data.success){
+						//成功后关闭模态窗口刷新市场活动列表操作模态窗口的方式：
+						//需要操作的模态窗口的jquery对象，调用modal方法，为该方法传递参数 show:打开模态窗口   hide：关闭模态窗口
+						$("#createActivityModal").modal("hide");
+					}else {
+						alert("添加市场活动失败")
+					}
+				}
+			})
 		});
 	});
 	
@@ -49,10 +134,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<div class="form-group">
 							<label for="create-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="create-marketActivityOwner">
-								  <option>zhangsan</option>
-								  <option>lisi</option>
-								  <option>wangwu</option>
+								<select class="form-control" id="create-owner">
+								  <%--下拉列表框--%>
 								</select>
 							</div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -64,11 +147,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<div class="form-group">
 							<label for="create-startTime" class="col-sm-2 control-label">开始日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-startTime">
+								<input type="text" class="form-control time" id="create-startDate"  readonly value="请选择日期">
 							</div>
 							<label for="create-endTime" class="col-sm-2 control-label">结束日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-endTime">
+								<input type="text" class="form-control time" id="create-endDate" readonly value="请选择日期">
 							</div>
 						</div>
                         <div class="form-group">
@@ -81,7 +164,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<div class="form-group">
 							<label for="create-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="create-describe"></textarea>
+								<textarea class="form-control" rows="3" id="create-description"></textarea>
 							</div>
 						</div>
 						
@@ -89,8 +172,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					
 				</div>
 				<div class="modal-footer">
+					<%--data-dismiss="modal"关闭模态窗口--%>
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveBtn">保存</button>
 				</div>
 			</div>
 		</div>

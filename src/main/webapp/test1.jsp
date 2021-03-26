@@ -8,7 +8,10 @@
     <title>mytitle</title>
 </head>
 <body>
-
+//创建时间从当前系统时间获取
+String createTime = request.getParameter(DateTimeUtil.getSysTime());
+//创建人也从当前session域中获取
+String createBy = request.getParameter(((User)request.getSession().getAttribute("user")).getName());
         $.ajax({
 
             url : "",

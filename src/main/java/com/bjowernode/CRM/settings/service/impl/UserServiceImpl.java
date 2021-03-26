@@ -27,8 +27,8 @@ public class UserServiceImpl implements UserService {
             throw new LoginException("账号不存在或者密码错误");
         }
         //如果能到这里，代表账号密码没错了，如果throws了，后续代码自动停止
-        //继续向下验证其他三项信息，包括失效时间，锁定状态，ip地址
 
+        //继续向下验证其他三项信息，包括失效时间，锁定状态，ip地址
         //验证失效时间,从数据库获取失效时间，从工具类里面拿到系统时间,最后验证比较
         String expireTime = user.getExpireTime();
         String currentTime = DateTimeUtil.getSysTime();
@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserList() {
-        return null;
+        List<User> userList = (List<User>) userDao.getUserList();
+        //调用dao层
+        return userList;
     }
 }
