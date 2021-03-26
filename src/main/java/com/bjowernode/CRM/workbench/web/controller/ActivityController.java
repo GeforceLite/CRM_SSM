@@ -48,8 +48,6 @@ public class ActivityController extends HttpServlet {
         String createBy = request.getParameter(((User)request.getSession().getAttribute("user")).getName());
         String editTime = request.getParameter("editTime");
         String editBy = request.getParameter("editBy");
-
-
     }
 
     private void getUserList(HttpServletRequest request, HttpServletResponse response){

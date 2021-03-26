@@ -89,12 +89,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				url: "workbench/activity/save.do",
 				data: {
 
-					"owner": $.trim("#create-owner".val()),
-					"name": $.trim("#create-name".val()),
-					"startDate": $.trim("#create-startDate".val()),
-					"endDate": $.trim("#create-endDate".val()),
-					"cost": $.trim("#create-cost".val()),
-					"description": $.trim("#create-description".val())
+					"owner": $.trim($("#create-owner").val()),
+					"name": $.trim($("#create-name").val()),
+					"startDate": $.trim($("#create-startDate").val()),
+					"endDate": $.trim($("#create-endDate").val()),
+					"cost": $.trim($("#create-cost").val()),
+					"description": $.trim($("#create-description").val())
 
 				},
 				type: "post",
@@ -104,6 +104,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					if (data.success){
 						//成功后关闭模态窗口刷新市场活动列表操作模态窗口的方式：
 						//需要操作的模态窗口的jquery对象，调用modal方法，为该方法传递参数 show:打开模态窗口   hide：关闭模态窗口
+
+
+
+						<!--操作完后关闭模态窗口-->
 						$("#createActivityModal").modal("hide");
 					}else {
 						alert("添加市场活动失败")
@@ -112,7 +116,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			})
 		});
 	});
-	
 </script>
 </head>
 <body>
