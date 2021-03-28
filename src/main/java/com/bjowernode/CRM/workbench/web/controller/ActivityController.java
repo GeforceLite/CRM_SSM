@@ -7,6 +7,9 @@ import com.bjowernode.CRM.utils.DateTimeUtil;
 import com.bjowernode.CRM.utils.PrintJson;
 import com.bjowernode.CRM.utils.ServiceFactory;
 import com.bjowernode.CRM.utils.UUIDUtil;
+import com.bjowernode.CRM.workbench.domain.Activity;
+import com.bjowernode.CRM.workbench.service.ActivityService;
+import com.bjowernode.CRM.workbench.service.Impl.ActivityServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,12 +49,27 @@ public class ActivityController extends HttpServlet {
         String createTime = request.getParameter(DateTimeUtil.getSysTime());
         //创建人也从当前session域中获取
         String createBy = request.getParameter(((User)request.getSession().getAttribute("user")).getName());
-        String editTime = request.getParameter("editTime");
-        String editBy = request.getParameter("editBy");
+        //创建一个vo对象，封装好参数传进去
+        Activity activity = new Activity();
+        activity.setId(id);
+        activity.setOwner(owner);
+        activity.setName(name);
+        activity.setStartDate(startDate);
+        activity.setEndDate(endDate);
+        activity.setCost(cost);
+        activity.setDescription(description);
+        activity.setCreateTime(createTime);
+        activity.setCreateBy(createBy);
+        //市场活动相关业务
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        //传入save方法
+        boolean flag = activityService.save(activity);
+        //返回给Ajax解析Json串
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void getUserList(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("获取用户列表方法进入");
+        System.out.println("模态窗口获取用户下拉列表方法进入");
 
         //这属于用户的业务，用代理，传入张三取出李四,Dao层查询操作在用户User那里
         //com.bjowernode.CRM.settings.service.impl.UserServiceImpl就是这个包
