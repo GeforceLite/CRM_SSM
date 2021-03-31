@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UserServiceImpl implements UserService {
-    //这里是业务层，调用dao层，也就是把dao层对象创建出来(用工具)
+    //这里是业务逻辑层，专门调用dao层，也就是把dao层对象创建出来(用工具)
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
 
     @Override

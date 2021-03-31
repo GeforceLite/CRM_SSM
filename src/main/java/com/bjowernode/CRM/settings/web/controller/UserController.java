@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+//表示层，与用户打交道，是Servlet
 //这里是控制器，日后由Spring负责编写
 public class UserController extends HttpServlet {
     //模板模式，Servlet会很多，不可能每一个业务都得去创建Servlet，所以用到了模板模式
@@ -49,6 +50,7 @@ public class UserController extends HttpServlet {
         try {
             //如果登陆失败了，直接跳到catch块了，不会跳到下一步的setAttribute里面
             User user = userService.login(loginAct, loginPwd, ip);
+            //request传值到前端
             request.getSession().setAttribute("user",user);
             /*如果登陆成功，返回一个json,全手动敲返回信息太费劲了，所以引入了工具类
             {"success":true}正常要拼一大串这样的引入工具后就会好写
