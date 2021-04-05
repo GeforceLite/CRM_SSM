@@ -27,7 +27,12 @@ public class TransactionInvocationHandler implements InvocationHandler{
 			session = SqlSessionUtil.getSqlSession();
 			
 			obj = method.invoke(target, args);
-			
+
+
+			//事务都从这里走，要提前进行动态代理对象的转换
+			//不走这个就提交不了事务
+
+
 			session.commit();
 		}catch(Exception e){
 			session.rollback();

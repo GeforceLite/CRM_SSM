@@ -7,7 +7,7 @@ import com.bjowernode.CRM.workbench.service.ActivityService;
 
 public class ActivityServiceImpl implements ActivityService {
     //ActivityService接口实现类
-    //new Dao层对象
+    //new Dao层代理对象
     private ActivityDao activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
 
 

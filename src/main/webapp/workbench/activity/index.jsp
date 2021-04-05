@@ -115,7 +115,68 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				}
 			})
 		});
+
+
+		
+
+		/*
+		页面加载完毕之后到后台去做查询分页
+		代表查询一页，每页两条记录
+		什么时候调用pageList函数呢？
+		1.点击市场活动时
+		2.点击创建修改查询时
+		3.点击上面的条件查询时
+		4.点击下面的分页按钮时
+		 */
+		pageList(1,2)
+
+
 	});
+	//这两个组件必备
+	//pageNo当前页码
+	//pageSize每页展现多少条数据
+	//pageList发出请求，拿数据条数，前端展示出来
+	function pageList(pageNo,pageSize){
+		$.ajax({
+			url: "workbench/activity/pageList.do",
+			data:{
+				"pageNo":pageNo,
+				"pageSize":pageSize,
+				"name":$.trim($("#search-name").val()),
+				"owner":$.trim($("#search-owner").val()),
+				"startDate":$.trim($("#search-startDate").val()),
+				"endDate":$.trim($("#search-endDate").val()),
+			},
+			type:"get",
+			dataType:"json",
+			success:function (data){
+				var html = "";
+				/*
+					data
+						我们需要的：市场活动信息列表
+						[{市场活动1},{2},{3}] List<Activity> aList
+						一会分页插件需要的：查询出来的总记录数
+						{"total":100} int total
+
+						{"total":100,"dataList":[{市场活动1},{2},{3}]}
+
+				 */
+				$.each(data.dataList,function(i,n){
+					$("#searchBtn").click(function (){
+						html +='<tr class="active">';
+						html+='	<td><input type="checkbox" value="'+n.id+'" /></td>';
+						html+='	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp\';">'+n.name+'</a></td>';
+						html+='	<td>'+n.owner+'</td>';
+						html+='	<td>'+n.startDate+'</td>';
+						html+='	<td>'+n.endDate+'</td>';
+						html+='</tr>';
+					})
+					$("#activityBody").html(html);
+				})
+			}
+		})
+
+	}
 </script>
 </head>
 <body>
@@ -267,14 +328,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-name">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-owner">
 				    </div>
 				  </div>
 
@@ -282,17 +343,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="startTime" />
+					  <input class="form-control" type="text" id="search-startDate" />
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="endTime">
+					  <input class="form-control" type="text" id="search-endDate">
 				    </div>
 				  </div>
 				  
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" class="btn btn-default" id="searchBtn">查询</button>
 				  
 				</form>
 			</div>
@@ -323,8 +384,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<td>结束日期</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="active">
+					<tbody id="activityBody">
+						<%--<tr class="active">
 							<td><input type="checkbox" /></td>
 							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/activity/detail.jsp';">发传单</a></td>
                             <td>zhangsan</td>
@@ -337,7 +398,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <td>zhangsan</td>
                             <td>2020-10-10</td>
                             <td>2020-10-20</td>
-                        </tr>
+                        </tr>--%>
 					</tbody>
 				</table>
 			</div>

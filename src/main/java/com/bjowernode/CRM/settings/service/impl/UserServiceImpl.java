@@ -10,9 +10,17 @@ import com.bjowernode.CRM.utils.SqlSessionUtil;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//这里是业务逻辑层，专门调用dao层，也就是把dao层对象创建出来(用工具)
 public class UserServiceImpl implements UserService {
-    //这里是业务逻辑层，专门调用dao层，也就是把dao层对象创建出来(用工具)
+
+    //********************************************************
+    //通过多态用接口拿到对象，先用SqlSessionUtil.getSqlSession拿到session对象
+    //再用getMapper拿到UserDao的映射对象（Mybatis已经集成的动态代理创建方法，没有为什么）
+    //这一句就相当于帮我们创建了Dao层的实现类了，就不用再去手动实现了
+    //通过userDao调用他名下的方法，就直接定位到上层抽象接口的同名方法
+    //Mybaitis自动找到UserDao.xml的方法同名Id标签自动CRUD
+    //返回了东西直接就在Service实现类里，也就是这里直接进行接收处理就成了
+    //********************************************************
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
 
     @Override

@@ -33,7 +33,20 @@ public class ActivityController extends HttpServlet {
             getUserList(request,response);
         } else if ("/workbench/activity/save.do".equals(path)) {
             save(request,response);
+        }else if ("/workbench/activity/pageList.do".equals(path)) {
+            pageList(request,response);
         }
+    }
+
+    private void pageList(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("分页查询方法进入");
+        String name = request.getParameter("name");
+        String pageSize = request.getParameter("pageSize");
+        String pageNo = request.getParameter("pageNo");
+        String owner = request.getParameter("owner");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        System.out.println(name);
     }
 
     private void save(HttpServletRequest request, HttpServletResponse response) {
@@ -81,4 +94,6 @@ public class ActivityController extends HttpServlet {
         PrintJson.printJsonObj(response, list);
 
     }
+
+
 }
