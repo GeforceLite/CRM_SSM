@@ -1,10 +1,5 @@
 package com.bjpowernode.settings.test;
 
-import com.bjowernode.CRM.utils.DateTimeUtil;
-import com.bjowernode.CRM.utils.MD5Util;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class test {
     public static void main(String[] args) {
         //传统写法
