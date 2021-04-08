@@ -97,7 +97,7 @@ public class ActivityController extends HttpServlet {
     private void save(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("模态窗口市场活动添加方法进入");
         String id = UUIDUtil.getUUID();
-        String owner = request.getParameter(" owner");
+        String owner = request.getParameter("owner");
         String name = request.getParameter("name");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");

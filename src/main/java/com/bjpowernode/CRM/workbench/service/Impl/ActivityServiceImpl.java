@@ -20,10 +20,8 @@ public class ActivityServiceImpl implements ActivityService {
     public PaginationVO pageList(Map<String, Object> map) {
         //取得total
         int total = activityDao.getTotalByCondition(map);
-        System.out.println("map====="+map);
         //取得dataList
         List<Activity> dataList = activityDao.getActivityListByCondition(map);
-        System.out.println("List====="+dataList.get(1));
         //创建一个vo对象，将total和dataList封装到vo中
         PaginationVO<Activity> vo = new PaginationVO<Activity>();
         vo.setTotal(total);
@@ -37,6 +35,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public boolean save(Activity activity) {
         boolean flag = true;
+        System.out.println(activity.getOwner()+"================");
         int count = activityDao.save(activity);
         if (count!=1){
             flag = false;

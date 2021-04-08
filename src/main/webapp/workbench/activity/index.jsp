@@ -10,21 +10,16 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
-
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
-	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
-	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
-
-
-	<script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
+<script type="text/javascript">
 
 	$(function(){
-		
 		//为创建按钮绑定事件，打开添加操作的模态窗口
 		$("#addBtn").click(function () {
 
@@ -103,7 +98,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		})
 
-
 		//为保存按钮绑定事件，执行添加操作
 		$("#saveBtn").click(function () {
 
@@ -180,7 +174,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 						 */
 						$("#activityAddForm")[0].reset();
-
+						alert("添加成功");
 						//关闭添加操作的模态窗口
 						$("#createActivityModal").modal("hide");
 
@@ -201,26 +195,23 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		})
 
-
 		//页面加载完毕后触发一个方法
 		//默认展开列表的第一页，每页展现两条记录
 		pageList(1,5);
 
 		//为查询按钮绑定事件，触发pageList方法
 		$("#searchBtn").click(function () {
-
 			/*
 
 				点击查询按钮的时候，我们应该将搜索框中的信息保存起来,保存到隐藏域中
-
+				保存起来但是不搜索，等到点击查询的时候才会进行搜索
 
 			 */
-
 			$("#hidden-name").val($.trim($("#search-name").val()));
 			$("#hidden-owner").val($.trim($("#search-owner").val()));
 			$("#hidden-startDate").val($.trim($("#search-startDate").val()));
 			$("#hidden-endDate").val($.trim($("#search-endDate").val()));
-
+			//触发分页查询条件
 			pageList(1,5);
 
 		})
@@ -228,7 +219,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		//为全选的复选框绑定事件，触发全选操作
 		$("#qx").click(function () {
-
+			/*prop() 方法设置或返回被选元素的属性和值。
+			当该方法用于返回属性值时，则返回第一个匹配元素的值。
+			当该方法用于设置属性值时，则为匹配元素集合设置一个或多个属性/值对。*/
 			$("input[name=xz]").prop("checked",this.checked);
 
 		})
@@ -244,13 +237,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		/*
 
 			动态生成的元素，我们要以on方法的形式来触发事件
-
+			动态生成：就是那个分页查询html动态生成的结果
 			语法：
 				$(需要绑定元素的有效的外层元素).on(绑定事件的方式,需要绑定的元素的jquery对象,回调函数)
 
 		 */
+		//标签全选，然后全选框选上
 		$("#activityBody").on("click",$("input[name=xz]"),function () {
-
+			/*应该是页面显示的复选框条数$("input[name=xz]").lengt等于已经选中的复选框$("input[name=xz]:checked").length
+			的时候，就应该把全选框都选上*/
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 
 		})
@@ -503,14 +498,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		//将全选的复选框的√干掉
 		$("#qx").prop("checked",false);
 
-		//查询前，将隐藏域中保存的信息取出来，重新赋予到搜索框中
+		//查询前，将隐藏域中保存的信息取出来，重新赋予到搜索框中，重新赋值给查询
 		$("#search-name").val($.trim($("#hidden-name").val()));
 		$("#search-owner").val($.trim($("#hidden-owner").val()));
 		$("#search-startDate").val($.trim($("#hidden-startDate").val()));
 		$("#search-endDate").val($.trim($("#hidden-endDate").val()));
 
 		$.ajax({
-
 			url : "workbench/activity/pageList.do",
 			data : {
 
@@ -525,7 +519,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			type : "get",
 			dataType : "json",
 			success : function (data) {
-
 				/*
 
 					data
@@ -538,7 +531,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						{"total":100,"dataList":[{市场活动1},{2},{3}]}
 
 				 */
-
 				var html = "";
 
 				//每一个n就是每一个市场活动对象
@@ -556,30 +548,28 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 				$("#activityBody").html(html);
 
-				//计算总页数
+				//计算总页数(三目运算符，总页数是否能整除，能的话就正常显示，不能的话多开一页放记录)
+				//parseInt是转换成数值才能进行运算
 				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
-
 				//数据处理完毕后，结合分页查询，对前端展现分页信息
+
+				//这里是BS插件，不需要背，拿来用就好
 				$("#activityPage").bs_pagination({
 					currentPage: pageNo, // 页码
 					rowsPerPage: pageSize, // 每页显示的记录条数
 					maxRowsPerPage: 20, // 每页最多显示的记录条数
 					totalPages: totalPages, // 总页数
 					totalRows: data.total, // 总记录条数
-
 					visiblePageLinks: 3, // 显示几个卡片
-
 					showGoToPage: true,
 					showRowsPerPage: true,
 					showRowsInfo: true,
 					showRowsDefaultInfo: true,
-
 					//该回调函数时在，点击分页组件的时候触发的
 					onChangePage : function(event, data){
 						pageList(data.currentPage , data.rowsPerPage);
 					}
 				});
-
 
 			}
 
@@ -591,6 +581,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </head>
 <body>
 
+<%--隐藏域操作，把框中信息保存到这里的隐藏域，只有点了查询才会把隐藏域的信息送到查询分页请求里面
+不点查询，首次的查询条件就一直在隐藏域中放着，点完下一页后分页的查询条件不变--%>
 	<input type="hidden" id="hidden-name"/>
 	<input type="hidden" id="hidden-owner"/>
 	<input type="hidden" id="hidden-startDate"/>
