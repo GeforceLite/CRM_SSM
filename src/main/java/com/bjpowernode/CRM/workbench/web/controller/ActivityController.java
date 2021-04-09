@@ -32,13 +32,26 @@ public class ActivityController extends HttpServlet {
         //进行判断
         //注意，setting路径前有/，非常容易出错
         if ("/workbench/activity/getUserList.do".equals(path)) {
-            //传对应的方法
             getUserList(request,response);
         } else if ("/workbench/activity/save.do".equals(path)) {
             save(request,response);
         }else if ("/workbench/activity/pageList.do".equals(path)) {
             pageList(request,response);
+        }else if ("/workbench/activity/delete.do".equals(path)){
+            delete(request,response);
         }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("市场活动删除操作进入");
+        //前端处理完的拼接请求串在这里就见不到了，因为浏览器自动就把&给去掉并且拆成5个串了
+        //所以后端看不见&很正常
+        String ids[] = request.getParameterValues("id");
+        //拿到Activity代理对象
+        ActivityService activtyService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag=activtyService.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
+
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {

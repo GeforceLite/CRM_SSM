@@ -4,8 +4,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace要用上相应Dao文件的全限定名称，也就是右键copy Reference-->
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ActivityDao">
-    <insert id="save">
+    <delete id="delete">
+        <!--客户活动删除-->
+        delete from tbl_activity
+        where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 
+
+    <insert id="save">
+        /*用户添加*/
         insert into tbl_activity(
 
             id,

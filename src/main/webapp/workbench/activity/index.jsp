@@ -251,7 +251,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		})
 
 		//为删除按钮绑定事件，执行市场活动删除操作
-		$("#deleteBtn").click(function () {
+		/*$("#deleteBtn").click(function () {
 
 			//找到复选框中所有挑√的复选框的jquery对象
 			var $xz = $("input[name=xz]:checked");
@@ -293,40 +293,69 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						type : "post",
 						dataType : "json",
 						success : function (data) {
-
-							/*
+							/!*
 
                                 data
                                     {"success":true/false}
 
-                             */
+                             *!/
 							if(data.success){
-
 								//删除成功后
 								//回到第一页，维持每页展现的记录数
 								pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
-
-
 							}else{
-
 								alert("删除市场活动失败");
-
 							}
-
-
 						}
-
 					})
-
-
 				}
-
-
-
-
 			}
 
 
+		})*/
+
+		$("#deleteBtn").click(function (){
+		//找到复选框中所有打对号的，知道哪些打对号了，才能依据进行删除
+			var $xz = $("input[name=xz]:checked");
+			//Jquery对象可以当做dom的数组来使用，length==0了就代表没有对象在里面
+			if ($xz.length==0){
+				alert("请选择要删除的记录");
+			}else {
+				//防止误删，用个确认框confirm来确认一下
+				if (confirm("确定删除所选框内容吗")) {
+					//选择条数不为0的情况
+					//url:workbench/activity/delete.do?id=xxx&id=xxx&id=xxx
+					//后缀参数太多，需要拆JSON，拼接一下
+					var param = "";
+					//怎么拆？遍历对象就好
+					for (i=0;i<$xz.length;i++){
+						param += "id="+$($xz[i]).val();
+						//拼接字符串id一大坨子没有分割，要拼上分隔符，而且最后一个不能有分隔符
+						//即如果不是最后一个元素，需要在后面追加一个&符
+						//这个分割符号，到了浏览器中发出来的时候就是自动分割成五个id了
+						//到了后端肯定就见不到&，因为浏览器就自动把他去掉并且分割了
+						if (i<$xz.length-1){
+							param += "&";
+						}
+					}
+					//处理完param串，就可以开始发送ajax请求了
+					$.ajax({
+						url: "workbench/activity/delete.do",
+						data:param,
+						type: "post",
+						dataType: "json",
+						success:function (data){
+							if(data.success){
+								//删除成功后
+								//回到第一页，维持每页展现的记录数
+								pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+							}else{
+								alert("删除市场活动失败");
+							}
+						}
+					})
+				}
+			}
 		})
 
 
@@ -495,7 +524,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	 */
 	function pageList(pageNo,pageSize) {
 
-		//将全选的复选框的√干掉
+		//每次查询前将全选的复选框的√干掉
 		$("#qx").prop("checked",false);
 
 		//查询前，将隐藏域中保存的信息取出来，重新赋予到搜索框中，重新赋值给查询

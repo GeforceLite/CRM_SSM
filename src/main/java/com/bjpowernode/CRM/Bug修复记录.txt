@@ -1,0 +1,11 @@
+request.getParameter()中，""里面多了个空格导致查询失败
+bug点：String owner=request.getParameter(" owner")
+
+<!--****************************************************************
+resultType尽量写全限定，不写全限定包会出各种奇怪的问题，导致无法操作Mybatis等问题
+一定要写全限定！resultType="com.bjpowernode.CRM.workbench.domain.Activity"
+****************************************************************-->
+<select id="getActivityListByCondition" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
+bug点：<select id="getActivityListByCondition" resultType="Activity">
+
+

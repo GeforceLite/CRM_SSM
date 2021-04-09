@@ -5,6 +5,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--namespace要用上相应Dao文件的全限定名称，也就是右键copy Reference-->
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ActivityDaoRemark">
 
+    <!--实际备注的删除-->
+    <delete id="deleteByAids" >
+        delete  from tbl_activity_remark
+        where activityId in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+
+    <!--查询市场活动列表备注的数量-->
+    <select id="getCountByAids" resultType="int">
+        select count(*) from tbl_activity_remark
+        where activityId in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+
+    </select>
 </mapper>
 
 
