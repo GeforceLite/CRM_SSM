@@ -1,5 +1,6 @@
 package com.bjpowernode.CRM.workbench.service.Impl;
 
+import com.bjpowernode.CRM.settings.dao.UserDao;
 import com.bjpowernode.CRM.utils.SqlSessionUtil;
 import com.bjpowernode.CRM.vo.PaginationVO;
 import com.bjpowernode.CRM.workbench.dao.ActivityDao;
@@ -17,7 +18,19 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityDao activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
     //市场活动备注dao
     private ActivityDaoRemark activityDaoRemark = SqlSessionUtil.getSqlSession().getMapper(ActivityDaoRemark.class);
+    //用户表Dao
+    private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
 
+    //查询信息列表和根据市场活动id查询单条记录操作（编辑操作前期铺垫
+    @Override
+    public Map<String, Object>getUserListAndActivity(String id) {
+        //取uList
+
+        //取a
+
+        //把uList和a都打包成map发出去
+        return null;
+    }
 
     //客户列表删除操作
     @Override

@@ -250,69 +250,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		})
 
-		//为删除按钮绑定事件，执行市场活动删除操作
-		/*$("#deleteBtn").click(function () {
-
-			//找到复选框中所有挑√的复选框的jquery对象
-			var $xz = $("input[name=xz]:checked");
-
-			if($xz.length==0){
-
-				alert("请选择需要删除的记录");
-
-			//肯定选了，而且有可能是1条，有可能是多条
-			}else{
-
-
-				if(confirm("确定删除所选中的记录吗？")){
-
-					//url:workbench/activity/delete.do?id=xxx&id=xxx&id=xxx
-
-					//拼接参数
-					var param = "";
-
-					//将$xz中的每一个dom对象遍历出来，取其value值，就相当于取得了需要删除的记录的id
-					for(var i=0;i<$xz.length;i++){
-
-						param += "id="+$($xz[i]).val();
-
-						//如果不是最后一个元素，需要在后面追加一个&符
-						if(i<$xz.length-1){
-
-							param += "&";
-
-						}
-
-					}
-
-					//alert(param);
-					$.ajax({
-
-						url : "workbench/activity/delete.do",
-						data : param,
-						type : "post",
-						dataType : "json",
-						success : function (data) {
-							/!*
-
-                                data
-                                    {"success":true/false}
-
-                             *!/
-							if(data.success){
-								//删除成功后
-								//回到第一页，维持每页展现的记录数
-								pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
-							}else{
-								alert("删除市场活动失败");
-							}
-						}
-					})
-				}
-			}
-
-
-		})*/
 
 		$("#deleteBtn").click(function (){
 		//找到复选框中所有打对号的，知道哪些打对号了，才能依据进行删除
@@ -347,7 +284,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						success:function (data){
 							if(data.success){
 								//删除成功后
-								//回到第一页，维持每页展现的记录数
+								//回到第一页，维持每页展现的记录数，重新刷新分页查询
 								pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
 							}else{
 								alert("删除市场活动失败");
@@ -361,7 +298,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		//为修改按钮绑定事件，打开修改操作的模态窗口
 		$("#editBtn").click(function () {
-
+		//查询选择了哪条记录
 			var $xz = $("input[name=xz]:checked");
 
 			if($xz.length==0){
@@ -388,13 +325,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					type : "get",
 					dataType : "json",
 					success : function (data) {
-
 						/*
 
 							data
 								用户列表
 								市场活动对象
-
+								json数组，一共两大块信息，一个就是owner拥有者列表
+								另外一个就是剩下的根据选中的那个id从数据库里面查出来的描述，创建时间等等内容
 								{"uList":[{用户1},{2},{3}],"a":{市场活动}}
 
 						 */
@@ -403,15 +340,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						var html = "<option></option>";
 
 						$.each(data.uList,function (i,n) {
-
+						//遍历下拉列表的用户，拼接出来
 							html += "<option value='"+n.id+"'>"+n.name+"</option>";
 
 						})
-
+						//填充所有者框内容
 						$("#edit-owner").html(html);
-
-
-						//处理单条activity
+						//处理单条activity，提前铺好数据
 						$("#edit-id").val(data.a.id);
 						$("#edit-name").val(data.a.name);
 						$("#edit-owner").val(data.a.owner);
@@ -671,12 +606,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
 								<!--
-
 									关于文本域textarea：
-										（1）一定是要以标签对的形式来呈现,正常状态下标签对要紧紧的挨着
-										（2）textarea虽然是以标签对的形式来呈现的，但是它也是属于表单元素范畴
-												我们所有的对于textarea的取值和赋值操作，应该统一使用val()方法（而不是html()方法）
-
+									（1）一定是要以标签对的形式来呈现,正常状态下标签对要紧紧的挨着
+									（2）textarea虽然是以标签对的形式来呈现的，但是它也是属于表单元素范畴
+										我们所有的对于textarea的取值和赋值操作，应该统一使用val()方法（而不是html()方法）
 								-->
 								<textarea class="form-control" rows="3" id="edit-description">123</textarea>
 							</div>

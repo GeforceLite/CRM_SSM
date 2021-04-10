@@ -23,23 +23,42 @@ import java.util.Map;
 
 //这里是控制器，日后由Spring负责编写
 public class ActivityController extends HttpServlet {
-    //模板模式，Servlet会很多，不可能每一个业务都得去创建Servlet，所以用到了模板模式
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("进入市场活动控制器");
         //根据路径判断用户需求,path拿到的是web.xml里的url-partten：/workbench/activity/xxx.do
         String path = request.getServletPath();
-        //进行判断
         //注意，setting路径前有/，非常容易出错
+        //模板模式，Servlet会很多，不可能每一个业务都得去创建Servlet，所以用到了模板模式
         if ("/workbench/activity/getUserList.do".equals(path)) {
             getUserList(request,response);
-        } else if ("/workbench/activity/save.do".equals(path)) {
+        }else if ("/workbench/activity/save.do".equals(path)) {
             save(request,response);
         }else if ("/workbench/activity/pageList.do".equals(path)) {
             pageList(request,response);
         }else if ("/workbench/activity/delete.do".equals(path)){
             delete(request,response);
+        }else if ("/workbench/activity/getUserListAndActivity.do".equals(path)){
+            getUserListAndActivity(request,response);
         }
+    }
+
+    private void getUserListAndActivity(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到查询信息列表和根据市场活动id查询单条记录操作（编辑操作前期铺垫");
+        String id = request.getParameter("id");
+        /*
+            总结：
+                controller调用service的方法，返回值应该是什么
+                你得想一想前端要什么，就要从service层取什么
+            前端需要的，问业务层去要
+            uList
+            a
+            以上两项信息，复用率不高，我们选择使用map打包这两项信息即可
+            map
+         */
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Map<String,Object> map=activityService.getUserListAndActivity(id);
+        PrintJson.printJsonObj(response,map);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
