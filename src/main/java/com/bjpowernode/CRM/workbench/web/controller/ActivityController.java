@@ -9,6 +9,7 @@ import com.bjpowernode.CRM.utils.ServiceFactory;
 import com.bjpowernode.CRM.utils.UUIDUtil;
 import com.bjpowernode.CRM.vo.PaginationVO;
 import com.bjpowernode.CRM.workbench.domain.Activity;
+import com.bjpowernode.CRM.workbench.domain.ActivityRemark;
 import com.bjpowernode.CRM.workbench.service.ActivityService;
 import com.bjpowernode.CRM.workbench.service.Impl.ActivityServiceImpl;
 
@@ -40,11 +41,63 @@ public class ActivityController extends HttpServlet {
             delete(request,response);
         }else if ("/workbench/activity/getUserListAndActivity.do".equals(path)){
             getUserListAndActivity(request,response);
+        }else if ("/workbench/activity/update.do".equals(path)){
+            update(request,response);
+        }else if ("/workbench/activity/detail.do".equals(path)){
+            detail(request,response);
+        }else if ("/workbench/activity/getRemarkByAid.do".equals(path)){
+            getRemarkByAid(request,response);
         }
     }
 
+    private void getRemarkByAid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("市场活动备注信息查询方法");
+        String activityId = request.getParameter("activityId");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<ActivityRemark> list=activityService.getRemarkByAid(activityId);
+        PrintJson.printJsonObj(response,list);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("跳转到市场活动详细信息页");
+        String id = request.getParameter("id");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        //实际上就是根据id查单条然后请求转发,要把activity存到作用域中
+        Activity activity = activityService.detail(id);
+        request.setAttribute("a",activity);
+        request.getRequestDispatcher("/workbench/activity/detail.jsp").forward(request,response);
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("更新市场活动方法进入");
+        String id = request.getParameter("id");
+        String owner = request.getParameter("owner");
+        String name = request.getParameter("name");
+        String cost = request.getParameter("cost");
+        String description = request.getParameter("description");
+        //修改时间从当前系统时间获取
+        String editTime = request.getParameter(DateTimeUtil.getSysTime());
+        //修改人也从当前session域中获取
+        String editBy = request.getParameter(((User)request.getSession().getAttribute("user")).getName());
+        //vo对象，封装好参数传进去
+        Activity activity = new Activity();
+        activity.setId(id);
+        activity.setOwner(owner);
+        activity.setName(name);
+        activity.setEditTime(editTime);
+        activity.setEditBy(editBy);
+        activity.setCost(cost);
+        activity.setDescription(description);
+        //市场活动相关业务
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        //传入save方法
+        boolean flag = activityService.update(activity);
+        //返回给Ajax解析Json串
+        PrintJson.printJsonFlag(response,flag);
+    }
+
     private void getUserListAndActivity(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("进入到查询信息列表和根据市场活动id查询单条记录操作（编辑操作前期铺垫");
+        System.out.println("进入到查询信息列表和根据市场活动id查询单条记录操作（编辑操作前期铺垫)");
         String id = request.getParameter("id");
         /*
             总结：

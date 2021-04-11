@@ -51,7 +51,48 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
+
+
+		//页面加载完毕之后展现市场活动相关的备注列表
+
+		showRemarkList()
+
 	});
+
+	function showRemarkList(){
+		$.ajax({
+			url:"workbench/activity/getRemarkByAid.do",
+			data:{
+				"activityId":"${a.id}"
+			},
+			type:"get",
+			dataType: "json",
+			success:function (data) {
+				/*
+				查询备注信息列表
+				data列表：[{备注1}，{备注2}，{备注3}]
+				 */
+				var html = "";
+				$.each(data,function (i,n){
+					html+='<div class="remarkDiv" style="height: 60px;">';
+					html+='<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+					html+='<div style="position: relative; top: -40px; left: 40px;" >';
+					html+='<h5>'+n.noteContent+'</h5>';
+					html+='<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;">'+(n.editFlag==0?n.createTime:n.editTime)+'由  '+(n.editFlag==0?n.createBy:n.editBy)+' '+(n.editFlag==0?"创建":"修改")+'</small>';
+					html+='<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+					html+='<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>';
+					html+='&nbsp;&nbsp;&nbsp;&nbsp;';
+					html+='<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>';
+					html+='</div>';
+					html+='	</div>';
+					html+='</div>';
+				})
+				//before和append都是添加的意思，append是从当前div往下添加，before是从当前div往上添加
+				//为什么不用append？因为最上方有个分割线图片不好调样式
+				$("#remarkDiv").before(html);
+			}
+		})
+	}
 	
 </script>
 
@@ -161,7 +202,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<!-- 大标题 -->
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
-			<h3>市场活动-发传单 <small>2020-10-10 ~ 2020-10-20</small></h3>
+			<h3>市场活动-${a.name}&nbsp;&nbsp;<small>${a.startDate} ~ ${a.endDate}</small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
@@ -175,39 +216,39 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div style="width: 300px; color: gray;">所有者</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>zhangsan</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">名称</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>发传单</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${a.name}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 
 		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
 			<div style="width: 300px; color: gray;">开始日期</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>2020-10-10</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${a.startDate}&nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">结束日期</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>2020-10-20</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${a.endDate}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
 			<div style="width: 300px; color: gray;">成本</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>4,000</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${a.cost}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
 			<div style="width: 300px; color: gray;">创建者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>zhangsan&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">2017-01-18 10:10:10</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${a.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${a.createTime}&nbsp;&nbsp;</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
 			<div style="width: 300px; color: gray;">修改者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>zhangsan&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">2017-01-19 10:10:10</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${a.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${a.editTime}&nbsp;&nbsp;</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
 			<div style="width: 300px; color: gray;">描述</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
-					市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等
+					${a.description}&nbsp;&nbsp;
 				</b>
 			</div>
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
@@ -221,7 +262,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 		
 		<!-- 备注1 -->
-		<div class="remarkDiv" style="height: 60px;">
+		<%--<div class="remarkDiv" style="height: 60px;">
 			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
 			<div style="position: relative; top: -40px; left: 40px;" >
 				<h5>哎呦！</h5>
@@ -232,10 +273,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>
 				</div>
 			</div>
-		</div>
+		</div>--%>
 		
 		<!-- 备注2 -->
-		<div class="remarkDiv" style="height: 60px;">
+		<%--<div class="remarkDiv" style="height: 60px;">
 			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
 			<div style="position: relative; top: -40px; left: 40px;" >
 				<h5>呵呵！</h5>
@@ -246,7 +287,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>
 				</div>
 			</div>
-		</div>
+		</div>--%>
 		
 		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
 			<form role="form" style="position: relative;top: 10px; left: 10px;">

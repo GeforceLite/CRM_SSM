@@ -4,6 +4,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace要用上相应Dao文件的全限定名称，也就是右键copy Reference-->
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ActivityDao">
+
+
+
+    <select id="detail" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
+        select
+        a.id,
+        u.name as owner,
+        a.name,
+        a.startDate,
+        a.endDate,
+        a.cost,
+        a.description,
+        a.createTime,
+        a.createBy,
+        a.editTime,
+        a.editBy
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        where a.id=#{id}
+    </select>
+
+    <update id="update">
+        update tbl_activity set
+            owner=#{owner},
+            name=#{name},
+            cost=#{cost},
+            startDate=#{startDate},
+            endDate=#{endDate},
+            description=#{description},
+            editTime=#{editTime},
+            editBy=#{editBy}
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
+        select * from tbl_activity where id=#{id}
+    </select>
+
     <delete id="delete">
         <!--客户活动删除-->
         delete from tbl_activity
@@ -12,7 +51,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-
 
     <insert id="save">
         /*用户添加*/

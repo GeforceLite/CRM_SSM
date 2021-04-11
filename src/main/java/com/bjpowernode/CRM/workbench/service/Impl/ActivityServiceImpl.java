@@ -1,13 +1,16 @@
 package com.bjpowernode.CRM.workbench.service.Impl;
 
 import com.bjpowernode.CRM.settings.dao.UserDao;
+import com.bjpowernode.CRM.settings.domain.User;
 import com.bjpowernode.CRM.utils.SqlSessionUtil;
 import com.bjpowernode.CRM.vo.PaginationVO;
 import com.bjpowernode.CRM.workbench.dao.ActivityDao;
 import com.bjpowernode.CRM.workbench.dao.ActivityDaoRemark;
 import com.bjpowernode.CRM.workbench.domain.Activity;
+import com.bjpowernode.CRM.workbench.domain.ActivityRemark;
 import com.bjpowernode.CRM.workbench.service.ActivityService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,15 +24,43 @@ public class ActivityServiceImpl implements ActivityService {
     //用户表Dao
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
 
-    //查询信息列表和根据市场活动id查询单条记录操作（编辑操作前期铺垫
+    //市场活动备注信息查询方法
+    @Override
+    public List<ActivityRemark> getRemarkByAid(String activityId) {
+        List<ActivityRemark> list=activityDaoRemark.getRemarkByAid(activityId);
+        return list;
+    }
+
+    //市场活动详细页面
+    @Override
+    public Activity detail(String id) {
+        Activity activity=activityDao.detail(id);
+        return activity;
+    }
+
+    //更新市场活动操作列表
+    @Override
+    public boolean update(Activity activity) {
+        boolean flag = true;
+        int count = activityDao.update(activity);
+        if (count!=1){
+            flag = false;
+        }
+        return flag;
+    }
+
+    //查询信息列表和根据市场活动id查询单条记录操作（编辑操作前期铺垫)
     @Override
     public Map<String, Object>getUserListAndActivity(String id) {
-        //取uList
-
+        //取uList,之前写过这个，复用就行
+        List<User> uList=userDao.getUserList();
         //取a
-
+        Activity activity=activityDao.getById(id);
         //把uList和a都打包成map发出去
-        return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("uList", uList);
+        map.put("a", activity);
+        return map;
     }
 
     //客户列表删除操作

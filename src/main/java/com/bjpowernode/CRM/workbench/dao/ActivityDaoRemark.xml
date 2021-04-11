@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--namespace要用上相应Dao文件的全限定名称，也就是右键copy Reference-->
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ActivityDaoRemark">
 
+
+    <!--市场活动备注信息查询方法-->
+    <select id="getRemarkByAid" resultType="com.bjpowernode.CRM.workbench.domain.ActivityRemark">
+        select * from tbl_activity_remark where activityId=#{activityId}
+    </select>
+
     <!--实际备注的删除-->
     <delete id="deleteByAids" >
         delete  from tbl_activity_remark

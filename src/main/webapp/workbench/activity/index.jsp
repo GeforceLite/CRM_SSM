@@ -412,21 +412,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						pageList($("#activityPage").bs_pagination('getOption', 'currentPage')
 								,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
 
-
 						//关闭修改操作的模态窗口
 						$("#editActivityModal").modal("hide");
-
-
-
 					}else{
-
 						alert("修改市场活动失败");
-
 					}
-
-
-
-
 				}
 
 			})
