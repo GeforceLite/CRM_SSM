@@ -11,4 +11,8 @@ public interface ActivityDaoRemark {
     int deleteByAids(String[] ids);
 
     List<ActivityRemark> getRemarkByAid(String activityId);
+
+    int deleteRemark(String id);
+
+    int saveRemark(ActivityRemark activityRemark);
 }

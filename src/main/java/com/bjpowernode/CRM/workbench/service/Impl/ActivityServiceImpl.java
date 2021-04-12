@@ -24,6 +24,33 @@ public class ActivityServiceImpl implements ActivityService {
     //用户表Dao
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
 
+
+    //市场活动备注信息添加方法
+    @Override
+    public Boolean saveRemark(ActivityRemark activityRemark) {
+        Boolean flag = null;
+        int count=activityDaoRemark.saveRemark(activityRemark);
+        if (count==1){
+            flag = true;
+        }else{
+            flag = false;
+        }
+        return flag;
+    }
+
+    //市场活动备注信息删除方法
+    @Override
+    public Boolean deleteRemark(String id) {
+        Boolean resultFlag = null;
+        int result = activityDaoRemark.deleteRemark(id);
+        if (result==1){
+            resultFlag = true;
+        }else {
+            resultFlag = false;
+        }
+        return resultFlag;
+    }
+
     //市场活动备注信息查询方法
     @Override
     public List<ActivityRemark> getRemarkByAid(String activityId) {

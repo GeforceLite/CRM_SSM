@@ -47,7 +47,43 @@ public class ActivityController extends HttpServlet {
             detail(request,response);
         }else if ("/workbench/activity/getRemarkByAid.do".equals(path)){
             getRemarkByAid(request,response);
+        }else if ("/workbench/activity/deleteRemark.do".equals(path)){
+            deleteRemark(request,response);
+        }else if ("/workbench/activity/saveRemark.do".equals(path)){
+            saveRemark(request,response);
         }
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("添加备注操作");
+        String activityId = request.getParameter("activityId");
+        String noteContent= request.getParameter("noteContent");
+        String id = UUIDUtil.getUUID();
+        String createTime = DateTimeUtil.getSysTime();
+        String createBy = request.getParameter(((User)request.getSession().getAttribute("user")).getName());
+        System.out.println(createBy);
+        String editFlag = "0";
+        ActivityRemark activityRemark = new ActivityRemark();
+        activityRemark.setActivityId(activityId);
+        activityRemark.setNoteContent(noteContent);
+        activityRemark.setId(id);
+        activityRemark.setCreateTime(createTime);
+        activityRemark.setCreateBy(createBy);
+        activityRemark.setEditFlag(editFlag);
+        ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Boolean flag=activityService.saveRemark(activityRemark);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", flag);
+        map.put("ar", activityRemark);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("删除备注操作");
+        String id = request.getParameter("id");
+        ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Boolean result=activityService.deleteRemark(id);
+        PrintJson.printJsonFlag(response,result);
     }
 
     private void getRemarkByAid(HttpServletRequest request, HttpServletResponse response) {
