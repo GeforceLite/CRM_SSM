@@ -179,7 +179,7 @@
 
             $.ajax({
 
-                url : "workbench/activity/getRemarkListByAid.do",
+                url :"workbench/activity/getRemarkListByAid.do",
                 data : {
 
                     "activityId" : "${a.id}"
@@ -229,7 +229,6 @@
 
         }
 
-
         function deleteRemark(id) {
 
             $.ajax({
@@ -278,7 +277,7 @@
 
             //alert(id);
 
-            //将模态窗口中，隐藏域中的id进行赋值
+            //将模态窗口中，隐藏域中的id进行赋值,这样就不过后台了,直接从前端拿信息更有效率
             $("#remarkId").val(id);
 
             //找到指定的存放备注信息的h5标签

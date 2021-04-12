@@ -45,13 +45,36 @@ public class ActivityController extends HttpServlet {
             update(request,response);
         }else if ("/workbench/activity/detail.do".equals(path)){
             detail(request,response);
-        }else if ("/workbench/activity/getRemarkByAid.do".equals(path)){
-            getRemarkByAid(request,response);
+        }else if ("/workbench/activity/getRemarkListByAid.do".equals(path)){
+            getRemarkListByAid(request,response);
         }else if ("/workbench/activity/deleteRemark.do".equals(path)){
             deleteRemark(request,response);
         }else if ("/workbench/activity/saveRemark.do".equals(path)){
             saveRemark(request,response);
+        }else if ("/workbench/activity/updateRemark.do".equals(path)){
+            updateRemark(request,response);
         }
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入市场活动备注修改操作");
+        String id = request.getParameter("id");
+        String noteContent = request.getParameter("noteContent");
+        String editTime = DateTimeUtil.getSysTime();
+        String editBy = ((User)request.getSession().getAttribute("user")).getName();
+        String editFlag = "1";
+        ActivityRemark ar = new ActivityRemark();
+        ar.setId(id);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = as.updateRemark(ar);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        PrintJson.printJsonObj(response, map);
     }
 
     private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
@@ -86,11 +109,11 @@ public class ActivityController extends HttpServlet {
         PrintJson.printJsonFlag(response,result);
     }
 
-    private void getRemarkByAid(HttpServletRequest request, HttpServletResponse response) {
+    private void getRemarkListByAid(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("市场活动备注信息查询方法");
         String activityId = request.getParameter("activityId");
         ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
-        List<ActivityRemark> list=activityService.getRemarkByAid(activityId);
+        List<ActivityRemark> list=activityService.getRemarkListByAid(activityId);
         PrintJson.printJsonObj(response,list);
     }
 

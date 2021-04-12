@@ -24,6 +24,18 @@ public class ActivityServiceImpl implements ActivityService {
     //用户表Dao
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
 
+    //市场活动备注信息修改方法
+    @Override
+    public Boolean updateRemark(ActivityRemark activityRemark) {
+        Boolean flag = null;
+        int count=activityDaoRemark.updateRemark(activityRemark);
+        if (count==1){
+            flag = true;
+        }else{
+            flag = false;
+        }
+        return flag;
+    }
 
     //市场活动备注信息添加方法
     @Override
@@ -53,8 +65,8 @@ public class ActivityServiceImpl implements ActivityService {
 
     //市场活动备注信息查询方法
     @Override
-    public List<ActivityRemark> getRemarkByAid(String activityId) {
-        List<ActivityRemark> list=activityDaoRemark.getRemarkByAid(activityId);
+    public List<ActivityRemark> getRemarkListByAid(String activityId) {
+        List<ActivityRemark> list=activityDaoRemark.getRemarkListByAid(activityId);
         return list;
     }
 
