@@ -43,6 +43,11 @@
   </filter-mapping>
 
 
+  <!--监听器-->
+  <listener>
+    <listener-class>com.bjpowernode.CRM.workbench.web.listener.SysInitListener</listener-class>
+  </listener>
+  
 
   <!--Servlet用户控制器-->
   <servlet>
@@ -75,5 +80,16 @@
     <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
   </servlet-mapping>
 
+
+
+  <!--线索控制器-->
+  <servlet>
+    <servlet-name>ClueController</servlet-name>
+    <servlet-class>com.bjpowernode.CRM.workbench.web.controller.ClueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/xxx.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>
