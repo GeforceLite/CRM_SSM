@@ -31,4 +31,6 @@ public interface ActivityService {
     Boolean updateRemark(ActivityRemark activityRemark);
 
     List getActivityListByClue(String id);
+
+    List<Activity> getActivityListByNameAndNotByClueId(Map<String, String> map);
 }

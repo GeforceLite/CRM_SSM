@@ -8,4 +8,6 @@ public interface ClueService {
     Clue detail(String id);
 
     Boolean unbund(String id);
+
+    Boolean bund(String cid, String[] aids);
 }

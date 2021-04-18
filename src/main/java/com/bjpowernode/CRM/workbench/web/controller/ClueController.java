@@ -44,8 +44,32 @@ public class ClueController extends HttpServlet {
             getActivityListByClue(request, response);
         }else if("/workbench/clue/unbund.do".equals(path)) {
             unbund(request, response);
+        }else if("/workbench/clue/getActivityListByNameAndNotByClueId.do".equals(path)) {
+            getActivityListByNameAndNotByClueId(request, response);
+        }else if("/workbench/clue/bund.do".equals(path)) {
+            bund(request, response);
         }
+    }
 
+    private void bund(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("线索绑定");
+        String cid = request.getParameter("cid");
+        String aids[] = request.getParameterValues("aid");
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Boolean flag=clueService.bund(cid,aids);
+        PrintJson.printJsonObj(response,flag);
+    }
+
+    private void getActivityListByNameAndNotByClueId(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("关联市场活动模糊查询");
+        String aname = request.getParameter("aname");
+        String clueId = request.getParameter("clueId");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Map<String, String> map = new HashMap<>();
+        map.put("aname", aname);
+        map.put("clueId", clueId);
+        List<Activity> aList = activityService.getActivityListByNameAndNotByClueId(map);
+        PrintJson.printJsonObj(response,aList);
     }
 
     private void unbund(HttpServletRequest request, HttpServletResponse response) {

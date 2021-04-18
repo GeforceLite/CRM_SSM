@@ -5,6 +5,9 @@
 
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ClueDao">
 
+    <insert id="bund">
+        insert into tbl_clue_activity_relation(id,clueId,activityId) values (#{id},#{clueId},#{activityId})
+    </insert>
 
     <delete id="unbund">
         delete

@@ -5,6 +5,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--namespace要用上相应Dao文件的全限定名称，也就是右键copy Reference-->
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ActivityDao">
 
+    <select id="getActivityListByNameAndNotByClueId" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
+
+        select
+
+            a.id,
+            a.name,
+            a.startDate,
+            a.endDate,
+            u.name as owner
+
+        from tbl_activity a
+                 join tbl_user u
+                      on a.owner=u.id
+
+        where a.name like '%' #{aname} '%' and a.id not in(
+
+          select
+
+          activityId
+
+          from tbl_clue_activity_relation
+
+          where clueId=#{clueId}
+
+            )
+
+
+    </select>
 
     <select id="getActivityListByClue" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
         select
