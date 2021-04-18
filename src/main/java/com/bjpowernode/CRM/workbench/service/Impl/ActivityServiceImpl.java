@@ -10,6 +10,7 @@ import com.bjpowernode.CRM.workbench.domain.Activity;
 import com.bjpowernode.CRM.workbench.domain.ActivityRemark;
 import com.bjpowernode.CRM.workbench.service.ActivityService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,14 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityDaoRemark activityDaoRemark = SqlSessionUtil.getSqlSession().getMapper(ActivityDaoRemark.class);
     //用户表Dao
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
+
+
+    @Override
+    public List getActivityListByClue(String id) {
+        List list = new ArrayList();
+        list=activityDao.getActivityListByClue(id);
+        return list;
+    }
 
     //市场活动备注信息修改方法
     @Override

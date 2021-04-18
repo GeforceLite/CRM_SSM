@@ -30,7 +30,7 @@ public class SysInitListener implements ServletContextListener {
         Set<String> set=map.keySet();
         for (String key:set){
             //遍历，存数据字典
-            application.setAttribute(key,map.get(key));
+            application.setAttribute(key+"List",map.get(key));
         }
         System.out.println("服务器缓存处理数据字典结束");
     }

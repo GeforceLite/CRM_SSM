@@ -6,6 +6,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.ActivityDao">
 
 
+    <select id="getActivityListByClue" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
+        select
+               car.id,
+               a.name,
+               a.startDate,
+               a.endDate,
+               u.name as owner
+        from tbl_activity a
+        join tbl_user u
+        on  a.owner=u.id
+        join tbl_clue_activity_relation car
+        on   a.id=car.activityId
+        where car.clueId=#{id}
+    </select>
 
     <select id="detail" resultType="com.bjpowernode.CRM.workbench.domain.Activity">
         select

@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     一个是影响性能，大量字段的情况下会卡顿
     二是今天遇到的问题，断点看到查询结果集有字段数量记录47条，但是打开变成null了
     读取不了，解决方案把*改成查询具体的字段名，问题解决，正常查询数据库
+    数据字典多用于不愿意经常变化的数据，比如城市名字，部门名称等
     ****************************************************************-->
     <select id="getTypeList" resultType="com.bjpowernode.CRM.settings.domain.DicType">
         select  code,name,description

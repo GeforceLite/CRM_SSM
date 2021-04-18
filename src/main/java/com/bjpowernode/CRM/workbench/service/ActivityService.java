@@ -29,4 +29,6 @@ public interface ActivityService {
     Boolean saveRemark(ActivityRemark activityRemark);
 
     Boolean updateRemark(ActivityRemark activityRemark);
+
+    List getActivityListByClue(String id);
 }

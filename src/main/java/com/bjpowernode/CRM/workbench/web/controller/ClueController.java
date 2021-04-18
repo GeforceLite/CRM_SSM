@@ -10,8 +10,11 @@ import com.bjpowernode.CRM.utils.UUIDUtil;
 import com.bjpowernode.CRM.vo.PaginationVO;
 import com.bjpowernode.CRM.workbench.domain.Activity;
 import com.bjpowernode.CRM.workbench.domain.ActivityRemark;
+import com.bjpowernode.CRM.workbench.domain.Clue;
 import com.bjpowernode.CRM.workbench.service.ActivityService;
+import com.bjpowernode.CRM.workbench.service.ClueService;
 import com.bjpowernode.CRM.workbench.service.Impl.ActivityServiceImpl;
+import com.bjpowernode.CRM.workbench.service.Impl.ClueServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +34,98 @@ public class ClueController extends HttpServlet {
         String path = request.getServletPath();
         //注意，setting路径前有/，非常容易出错
         //模板模式，Servlet会很多，不可能每一个业务都得去创建Servlet，所以用到了模板模式
-        if ("/workbench/clue/xxx.do".equals(path)) {
-
+        if ("/workbench/clue/getUserList.do".equals(path)) {
+            getUserList(request, response);
+        }else if("/workbench/clue/save.do".equals(path)) {
+            save(request, response);
+        }else if("/workbench/clue/detail.do".equals(path)) {
+            detail(request, response);
+        }else if("/workbench/clue/getActivityListByClue.do".equals(path)) {
+            getActivityListByClue(request, response);
+        }else if("/workbench/clue/unbund.do".equals(path)) {
+            unbund(request, response);
         }
+
     }
+
+    private void unbund(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("解除关联操作");
+        String id = request.getParameter("id");
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Boolean flag=clueService.unbund(id);
+        PrintJson.printJsonFlag(response,flag);
     }
+
+    private void getActivityListByClue(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("根据线索id查询关联的市场活动列表");
+        String id = request.getParameter("clueId");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List list=activityService.getActivityListByClue(id);
+        PrintJson.printJsonObj(response,list);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("跳转到线索的详细信息页");
+        String id = request.getParameter("id");
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Clue clue=clueService.detail(id);
+        request.setAttribute("c",clue);
+        request.getRequestDispatcher("/workbench/clue/detail.jsp").forward(request,response);
+    }
+
+
+    //线索添加方法
+    private void save(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("线索保存方法开始运行");
+        Boolean result = true;
+        String id = UUIDUtil.getUUID();
+        String fullname = request.getParameter("fullname");
+        String appellation = request.getParameter("appellation");
+        String owner = request.getParameter("owner");
+        String company = request.getParameter("company");
+        String job = request.getParameter("job");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String website = request.getParameter("website");
+        String mphone = request.getParameter("mphone");
+        String state = request.getParameter("state");
+        String source = request.getParameter("source");
+        String createTime = DateTimeUtil.getSysTime();
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
+        String description = request.getParameter("description");
+        String contactSummary = request.getParameter("contactSummary");
+        String nextContactTime = request.getParameter("nextContactTime");
+        String address = request.getParameter("address");
+        Clue clue = new Clue();
+        clue.setId(id);
+        clue.setAddress(address);
+        clue.setWebsite(website);
+        clue.setState(state);
+        clue.setSource(source);
+        clue.setPhone(phone);
+        clue.setOwner(owner);
+        clue.setNextContactTime(nextContactTime);
+        clue.setMphone(mphone);
+        clue.setJob(job);
+        clue.setFullname(fullname);
+        clue.setEmail(email);
+        clue.setDescription(description);
+        clue.setCreateTime(createTime);
+        clue.setCreateBy(createBy);
+        clue.setContactSummary(contactSummary);
+        clue.setCompany(company);
+        clue.setAppellation(appellation);
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        result=clueService.save(clue);
+        PrintJson.printJsonFlag(response,result);
+    }
+
+
+    //获取用户信息列表方法
+    private void getUserList(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("获取用户信息列表");
+        UserService userService = (UserService) ServiceFactory.getService(new UserServiceImpl());
+        List list=userService.getUserList();
+        PrintJson.printJsonObj(response,list);
+    }
+}
