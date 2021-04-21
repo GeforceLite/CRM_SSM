@@ -36,19 +36,29 @@ public class ClueController extends HttpServlet {
         //模板模式，Servlet会很多，不可能每一个业务都得去创建Servlet，所以用到了模板模式
         if ("/workbench/clue/getUserList.do".equals(path)) {
             getUserList(request, response);
-        }else if("/workbench/clue/save.do".equals(path)) {
+        } else if ("/workbench/clue/save.do".equals(path)) {
             save(request, response);
-        }else if("/workbench/clue/detail.do".equals(path)) {
+        } else if ("/workbench/clue/detail.do".equals(path)) {
             detail(request, response);
-        }else if("/workbench/clue/getActivityListByClue.do".equals(path)) {
+        } else if ("/workbench/clue/getActivityListByClue.do".equals(path)) {
             getActivityListByClue(request, response);
-        }else if("/workbench/clue/unbund.do".equals(path)) {
+        } else if ("/workbench/clue/unbund.do".equals(path)) {
             unbund(request, response);
-        }else if("/workbench/clue/getActivityListByNameAndNotByClueId.do".equals(path)) {
+        } else if ("/workbench/clue/getActivityListByNameAndNotByClueId.do".equals(path)) {
             getActivityListByNameAndNotByClueId(request, response);
-        }else if("/workbench/clue/bund.do".equals(path)) {
+        } else if ("/workbench/clue/bund.do".equals(path)) {
             bund(request, response);
+        } else if ("/workbench/clue/getActivityListByName.do".equals(path)) {
+            getActivityListByName(request, response);
         }
+    }
+
+    private void getActivityListByName(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("市场活动搜索进入");
+        String aname = request.getParameter("aname");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> list=activityService.getActivityListByName(aname);
+        PrintJson.printJsonObj(response,list);
     }
 
     private void bund(HttpServletRequest request, HttpServletResponse response) {

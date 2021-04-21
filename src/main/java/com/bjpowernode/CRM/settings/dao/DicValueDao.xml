@@ -9,7 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     尽量写全限定！resultType="com.bjpowernode.CRM.workbench.domain.Activity"
     ****************************************************************-->
     <select id="getListByCode" resultType="com.bjpowernode.CRM.settings.domain.DicValue">
-        select * from tbl_dic_value where typeCode=#{code}
+        select *
+        from tbl_dic_value
+        where typeCode = #{code}
+        order by orderNo asc;
     </select>
 </mapper>
 
