@@ -111,8 +111,8 @@ EL表达式用pageContext.getXXX()等方法可以实现
 			})
 
 
-			//为 提交（市场活动）按钮绑定事件，填充市场活动源（填写两项信息 名字+id）
-			$("#submitActivityBtn").click(function () {
+
+			/*$("#submitActivityBtn").click(function () {
 
 				//取得选中市场活动的id
 				var $xz = $("input[name=xz]:checked");
@@ -128,6 +128,19 @@ EL表达式用pageContext.getXXX()等方法可以实现
 				//将模态窗口关闭掉
 				$("#searchActivityModal").modal("hide");
 
+			})*/
+			//为 提交（市场活动）按钮绑定事件，填充市场活动源（填写两项信息 名字+id）id放隐藏域
+			$("#submitActivityBtn").click(function (){
+			//取得选中Id
+				var $xz = $("input[name=xz]:checked");
+				var id = $xz.val();
+			//取市场活动的名字,定位到Id
+				var name=$("#"+id).html()
+			//把刚刚找到的两项信息填充到对应的隐藏域里面
+				$("#activityId").val(id);
+				$("#activityName").val(name);
+			//关闭模态窗口
+				$("#searchActivityModal").modal("hide");
 			})
 
 
@@ -140,7 +153,7 @@ EL表达式用pageContext.getXXX()等方法可以实现
                     请求结束后，最终响应回线索列表页
 
                     根据"为客户创建交易"的复选框有没有挑√，来判断是否需要创建交易
-
+					传统请求就好，没有必要进行Ajax请求
 
                  */
 
@@ -270,7 +283,7 @@ EL表达式用pageContext.getXXX()等方法可以实现
     -->
 
 	<form id="tranForm" action="workbench/clue/convert.do" method="post">
-
+		<%--提供一个标记给后台看，后台到时候做判断是否需要创建对应的交易--%>
 		<input type="hidden" name="flag" value="a"/>
 
 		<input type="hidden" name="clueId" value="${param.id}"/>
@@ -299,7 +312,7 @@ EL表达式用pageContext.getXXX()等方法可以实现
 		<div class="form-group" style="width: 400px;position: relative; left: 20px;">
 			<label for="activity">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" id="openSearchModalBtn" style="text-decoration: none;"><span class="glyphicon glyphicon-search"></span></a></label>
 			<input type="text" class="form-control" id="activityName" placeholder="点击上面搜索" readonly>
-			<input type="hidden" id="activityId" name="activityId"/>
+			<input type="hidden" id="activityId" name="activityId"/><%--隐藏域对象，放的是选中的Id--%>
 		</div>
 	</form>
 

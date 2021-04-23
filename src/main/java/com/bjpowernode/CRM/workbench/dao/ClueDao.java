@@ -11,4 +11,8 @@ public interface ClueDao {
     int unbund(String id);
 
     int bund(ClueActivityRelation clueActivityRelation);
+
+    Clue getById(String clueId);
+
+    int delete(String clue);
 }

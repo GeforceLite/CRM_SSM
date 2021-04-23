@@ -11,6 +11,7 @@ import com.bjpowernode.CRM.vo.PaginationVO;
 import com.bjpowernode.CRM.workbench.domain.Activity;
 import com.bjpowernode.CRM.workbench.domain.ActivityRemark;
 import com.bjpowernode.CRM.workbench.domain.Clue;
+import com.bjpowernode.CRM.workbench.domain.Tran;
 import com.bjpowernode.CRM.workbench.service.ActivityService;
 import com.bjpowernode.CRM.workbench.service.ClueService;
 import com.bjpowernode.CRM.workbench.service.Impl.ActivityServiceImpl;
@@ -50,7 +51,47 @@ public class ClueController extends HttpServlet {
             bund(request, response);
         } else if ("/workbench/clue/getActivityListByName.do".equals(path)) {
             getActivityListByName(request, response);
+        } else if ("/workbench/clue/convert.do".equals(path)) {
+            convert(request, response);
         }
+    }
+
+    private void convert(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("线索转换进入");
+        String clueId = request.getParameter("clueId");
+        //接收标记信号，观察是否需有标记，若有则创建交易
+        String flag = request.getParameter("flag");
+        String createBy = ((User) request.getSession().getAttribute("user")).getName();        Tran tran = null;
+        if ("a".equals(flag)){
+            //需要创建交易并且线索转换，去掉一条线索，添加一个客户和联系人
+            //到这个位置，就代表出现了交易，可以创建一个交易对象来接收对应的数据源
+            tran = new Tran();
+            String money = request.getParameter("money");
+            String name = request.getParameter("name");
+            String expectedDate = request.getParameter("expectedDate");
+            String stage = request.getParameter("stage");
+            String activityId = request.getParameter("activityId");
+            String createTime = DateTimeUtil.getSysTime();
+            String id = UUIDUtil.getUUID();
+            tran.setId(id);
+            tran.setName(name);
+            tran.setMoney(money);
+            tran.setExpectedDate(expectedDate);
+            tran.setStage(stage);
+            tran.setActivityId(activityId);
+            tran.setCreateBy(createBy);
+            tran.setCreateTime(createTime);
+
+        }
+        //到这里如果tran对象仍然是一个空的对象，代表没有交易的产生
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Boolean flag1=clueService.convert(clueId,tran,createBy);
+        //这里不是Ajax请求，所以就得用转发重定向了
+        if (flag1){
+            response.sendRedirect(request.getContextPath()+"/workbench/clue/index.jsp");
+        }
+
+
     }
 
     private void getActivityListByName(HttpServletRequest request, HttpServletResponse response) {
