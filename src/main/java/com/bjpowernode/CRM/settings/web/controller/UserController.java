@@ -1,7 +1,10 @@
 package com.bjpowernode.CRM.settings.web.controller;
 
+import com.bjpowernode.CRM.settings.domain.DicValue;
 import com.bjpowernode.CRM.settings.domain.User;
+import com.bjpowernode.CRM.settings.service.DicService;
 import com.bjpowernode.CRM.settings.service.UserService;
+import com.bjpowernode.CRM.settings.service.impl.DicServiceImpl;
 import com.bjpowernode.CRM.settings.service.impl.UserServiceImpl;
 import com.bjpowernode.CRM.utils.MD5Util;
 import com.bjpowernode.CRM.utils.PrintJson;
@@ -13,7 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 //表示层，与用户打交道，是Servlet
 //这里是控制器，日后由Spring负责编写
 public class UserController extends HttpServlet {
@@ -27,10 +33,8 @@ public class UserController extends HttpServlet {
         //注意，setting路径前有/，非常容易出错
         if ("/settings/user/login.do".equals(path)) {
             //传对应的方法
-            //xxx.(request,response)
+            //xxx.(request,response)*/
             login(request, response);
-        } else if ("/settings/user/login.do".equals(path)) {
-
         }
     }
 

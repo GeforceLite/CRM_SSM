@@ -347,9 +347,9 @@
 						<label for="edit-clueOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 						<div class="col-sm-10" style="width: 300px;">
 							<select class="form-control" id="edit-clueOwner">
-								<option>zhangsan</option>
-								<option>lisi</option>
-								<option>wangwu</option>
+								<c:forEach items="${userList}" var="u">
+									<option value="${u.value}">${u.text}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<label for="edit-company" class="col-sm-2 control-label">公司<span style="font-size: 15px; color: red;">*</span></label>
@@ -362,12 +362,9 @@
 						<label for="edit-call" class="col-sm-2 control-label">称呼</label>
 						<div class="col-sm-10" style="width: 300px;">
 							<select class="form-control" id="edit-call">
-								<option></option>
-								<option selected>先生</option>
-								<option>夫人</option>
-								<option>女士</option>
-								<option>博士</option>
-								<option>教授</option>
+								<c:forEach items="${appellationList}" var="a">
+									<option value="${a.value}">${a.text}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<label for="edit-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
@@ -406,14 +403,9 @@
 						<label for="edit-status" class="col-sm-2 control-label">线索状态</label>
 						<div class="col-sm-10" style="width: 300px;">
 							<select class="form-control" id="edit-status">
-								<option></option>
-								<option>试图联系</option>
-								<option>将来联系</option>
-								<option selected>已联系</option>
-								<option>虚假线索</option>
-								<option>丢失线索</option>
-								<option>未联系</option>
-								<option>需要条件</option>
+								<c:forEach items="${stageList}" var="s">
+									<option value="${s.value}">${s.text}</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
@@ -422,21 +414,9 @@
 						<label for="edit-source" class="col-sm-2 control-label">线索来源</label>
 						<div class="col-sm-10" style="width: 300px;">
 							<select class="form-control" id="edit-source">
-								<option></option>
-								<option selected>广告</option>
-								<option>推销电话</option>
-								<option>员工介绍</option>
-								<option>外部介绍</option>
-								<option>在线商场</option>
-								<option>合作伙伴</option>
-								<option>公开媒介</option>
-								<option>销售邮件</option>
-								<option>合作伙伴研讨会</option>
-								<option>内部研讨会</option>
-								<option>交易会</option>
-								<option>web下载</option>
-								<option>web调研</option>
-								<option>聊天</option>
+								<c:forEach items="${sourceList}" var="s">
+									<option value="${s.value}">${s.text}</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
