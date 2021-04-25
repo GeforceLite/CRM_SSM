@@ -11,4 +11,6 @@ public interface CustomerDao {
     int save(Customer customer);
 
     List<String> getCustomerName(String name);
+
+    int add(Customer customer);
 }

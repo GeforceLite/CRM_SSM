@@ -5,6 +5,8 @@
 
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.CustomerDao">
 
+
+
     <select id="getCustomerName" resultType="String">
         select name from tbl_customer where name like '%' #{name} '%'
     </select>

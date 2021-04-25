@@ -3,11 +3,16 @@ package com.bjpowernode.CRM.workbench.web.controller;
 import com.bjpowernode.CRM.settings.domain.User;
 import com.bjpowernode.CRM.settings.service.UserService;
 import com.bjpowernode.CRM.settings.service.impl.UserServiceImpl;
+import com.bjpowernode.CRM.utils.DateTimeUtil;
 import com.bjpowernode.CRM.utils.PrintJson;
 import com.bjpowernode.CRM.utils.ServiceFactory;
+import com.bjpowernode.CRM.utils.UUIDUtil;
 import com.bjpowernode.CRM.workbench.dao.CustomerDao;
+import com.bjpowernode.CRM.workbench.domain.Tran;
 import com.bjpowernode.CRM.workbench.service.CustomerService;
 import com.bjpowernode.CRM.workbench.service.Impl.CustomerServiceImpl;
+import com.bjpowernode.CRM.workbench.service.Impl.TranServiceImpl;
+import com.bjpowernode.CRM.workbench.service.TranService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +34,65 @@ public class TranController extends HttpServlet {
             add(request, response);
         } else if ("/workbench/transaction/getCustomerName.do".equals(path)) {
             getCustomerName(request, response);
+        } else if ("/workbench/transaction/save.do".equals(path)) {
+            save(request, response);
+        } else if ("/workbench/transaction/detail.do".equals(path)) {
+            detail(request, response);
+    }
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("跳转到详细信息页");
+        String id = request.getParameter("id");
+        TranService tranService = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Tran tran=tranService.detail(id);
+        request.setAttribute("t",tran);
+        //要用request域存值，就一定要转发,转发就能把页面停在detail.do上面
+        //但是如果用了重定向，就会把页面送到detail.jsp上面，页面数据带不过去
+        //如果数据有刷新的话显示不出来，所以就要用请求转发
+        request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request,response);
+    }
+
+    private void save(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("交易创建进入");
+        String id = UUIDUtil.getUUID();
+        String createTime = DateTimeUtil.getSysTime();
+        String createBy = ((User) request.getSession().getAttribute("user")).getName();
+        String owner = request.getParameter("owner");
+        String money = request.getParameter("money");
+        String name = request.getParameter("name");
+        String expectedDate = request.getParameter("expectedDate");
+        String customerName = request.getParameter("customerName");//此处我们暂时只有客户名称，还没有id
+        String stage = request.getParameter("stage");
+        String type = request.getParameter("type");
+        String source = request.getParameter("source");
+        String activityId = request.getParameter("activityId");
+        String contactsId = request.getParameter("contactsId");
+        String description = request.getParameter("description");
+        String contactSummary = request.getParameter("contactSummary");
+        String nextContactTime = request.getParameter("nextContactTime");
+        Tran tran = new Tran();
+        tran.setId(id);
+        tran.setOwner(owner);
+        tran.setMoney(money);
+        tran.setName(name);
+        tran.setExpectedDate(expectedDate);
+        tran.setStage(stage);
+        tran.setType(type);
+        tran.setSource(source);
+        tran.setActivityId(activityId);
+        tran.setContactsId(contactsId);
+        tran.setCreateTime(createTime);
+        tran.setCreateBy(createBy);
+        tran.setDescription(description);
+        tran.setContactSummary(contactSummary);
+        tran.setNextContactTime(nextContactTime);
+        TranService tranService = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Boolean result=tranService.save(tran, customerName);
+        System.out.println(result);
+        if (result){
+            //由于这次提交的不是Ajax，是正常的表单提交，因此得用转发重定向
+            response.sendRedirect(request.getContextPath()+"/workbench/transaction/index.jsp");
         }
 
     }

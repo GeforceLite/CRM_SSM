@@ -5,21 +5,88 @@
 
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.TranDao">
 
+
+    <select id="detail" resultType="com.bjpowernode.CRM.workbench.domain.Tran">
+        select
+            tran.id,
+            user.name as owner,
+            tran.money,
+            tran.name,
+            tran.expectedDate,
+            cus.name as customerId,
+            tran.stage,
+            tran.type,
+            tran.source,
+            act.name as activityId,
+            con.fullname as contactsId,
+            tran.createBy,
+            tran.createTime,
+            tran.editBy,
+            tran.editTime,
+            tran.description,
+            tran.contactSummary,
+            tran.nextContactTime
+        from tbl_tran tran
+            join tbl_user user
+            on tran.owner=user.id
+            join tbl_customer cus
+            on tran.customerId=cus.id
+            left join tbl_activity act
+            on tran.activityId=act.id
+            left join tbl_contacts con
+            on tran.contactsId=con.id
+
+        where tran.id=#{id}
+    </select>
+
     <insert id="save">
-        insert into tbl_tran(source,
-                             owner,
-                             nextContactTime,
-                             description,
-                             customerId,
-                             contactsId)
-        values (#{source},
-                #{owner},
-                #{nextContactTime},
-                #{description},
-                #{customerId},
-                #{contactsId});
+
+        insert into tbl_tran(
+
+            id,
+            owner,
+            money,
+            name,
+            expectedDate,
+            customerId,
+            stage,
+            type,
+            source,
+            activityId,
+            contactsId,
+            createBy,
+            createTime,
+            description,
+            contactSummary,
+            nextContactTime
+
+
+        )
+
+        values(
+
+                  #{id},
+                  #{owner},
+                  #{money},
+                  #{name},
+                  #{expectedDate},
+                  #{customerId},
+                  #{stage},
+                  #{type},
+                  #{source},
+                  #{activityId},
+                  #{contactsId},
+                  #{createBy},
+                  #{createTime},
+                  #{description},
+                  #{contactSummary},
+                  #{nextContactTime}
+
+              )
+
 
     </insert>
+
   	
 </mapper>
 
