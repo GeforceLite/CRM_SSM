@@ -11,11 +11,19 @@ import com.bjpowernode.CRM.workbench.domain.Tran;
 import com.bjpowernode.CRM.workbench.domain.TranHistory;
 import com.bjpowernode.CRM.workbench.service.TranService;
 
+import java.util.List;
+
 public class TranServiceImpl implements TranService {
 
     private TranDao tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
     private TranHistoryDao tranHistoryDao = SqlSessionUtil.getSqlSession().getMapper(TranHistoryDao.class);
     private CustomerDao customerDao = SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
+
+    @Override
+    public List<TranHistory> getHistoryListById(String tranId) {
+        List<TranHistory> list=tranHistoryDao.getHistoryListById(tranId);
+        return list;
+    }
 
     @Override
     public Tran detail(String id) {
@@ -26,23 +34,14 @@ public class TranServiceImpl implements TranService {
     @Override
     public Boolean save(Tran t, String customerName) {
        /*
-
             交易添加业务：
-
                 在做添加之前，参数t里面就少了一项信息，就是客户的主键，customerId
-
                 先处理客户相关的需求
-
                 （1）判断customerName，根据客户名称在客户表进行精确查询
                        如果有这个客户，则取出这个客户的id，封装到t对象中
                        如果没有这个客户，则再客户表新建一条客户信息，然后将新建的客户的id取出，封装到t对象中
-
                 （2）经过以上操作后，t对象中的信息就全了，需要执行添加交易的操作
-
                 （3）添加交易完毕后，需要创建一条交易历史
-
-
-
          */
 
         boolean flag = true;

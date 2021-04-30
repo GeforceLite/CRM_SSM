@@ -9,6 +9,7 @@ import com.bjpowernode.CRM.utils.ServiceFactory;
 import com.bjpowernode.CRM.utils.UUIDUtil;
 import com.bjpowernode.CRM.workbench.dao.CustomerDao;
 import com.bjpowernode.CRM.workbench.domain.Tran;
+import com.bjpowernode.CRM.workbench.domain.TranHistory;
 import com.bjpowernode.CRM.workbench.service.CustomerService;
 import com.bjpowernode.CRM.workbench.service.Impl.CustomerServiceImpl;
 import com.bjpowernode.CRM.workbench.service.Impl.TranServiceImpl;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 //这里是控制器，日后由Spring负责编写
 public class TranController extends HttpServlet {
@@ -38,19 +40,49 @@ public class TranController extends HttpServlet {
             save(request, response);
         } else if ("/workbench/transaction/detail.do".equals(path)) {
             detail(request, response);
+        } else if ("/workbench/transaction/getHistoryListByTranId.do".equals(path)) {
+            getHistoryListById(request, response);
+        }
     }
+
+    private void getHistoryListById(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("通过Id查询交易历史");
+        String tranId = request.getParameter("tranId");
+        TranService tranService = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        List<TranHistory> list=tranService.getHistoryListById(tranId);
+        //阶段和可能性之间的对应关系
+        Map<String,String> pMap = (Map<String,String>)request.getAttribute("pMap");
+        //遍历交易历史列表，为了取得历史阶段，用阶段拿可能性，拿完可能性放进tranHistory对象里一起打回前端
+        for(TranHistory tranHistory:list){
+            //根据每一条交易历史取出每一个阶段
+            String stage = tranHistory.getStage();
+            String possibility=pMap.get(stage);
+            tranHistory.setPossibility(possibility);
+        }
+        PrintJson.printJsonObj(response,list);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("跳转到详细信息页");
         String id = request.getParameter("id");
-        TranService tranService = (TranService) ServiceFactory.getService(new TranServiceImpl());
-        Tran tran=tranService.detail(id);
-        request.setAttribute("t",tran);
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Tran t = ts.detail(id);
+        //处理可能性
+        /*
+
+            阶段 t
+            阶段和可能性之间的对应关系 pMap
+
+         */
+        String stage = t.getStage();
+        Map<String,String> pMap = (Map<String,String>)this.getServletContext().getAttribute("pMap");
+        String possibility = pMap.get(stage);
+        t.setPossibility(possibility);
+        request.setAttribute("t", t);
         //要用request域存值，就一定要转发,转发就能把页面停在detail.do上面
         //但是如果用了重定向，就会把页面送到detail.jsp上面，页面数据带不过去
         //如果数据有刷新的话显示不出来，所以就要用请求转发
-        request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request,response);
+        request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request, response);
     }
 
     private void save(HttpServletRequest request, HttpServletResponse response) throws IOException {

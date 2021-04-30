@@ -19,6 +19,6 @@ public class JunitTest {
         /*ClueServiceImpl clueService = new ClueServiceImpl();
         clueService.convert("464072f8e0234409981c8940c9d6a506", null, "40f6cdea0bd34aceb77492a1656d9fb3");*/
         TranServiceImpl tranService = new TranServiceImpl();
-        tranService.detail("c8fb5b02fdc042e1bebe61be51356e4d");
+        tranService.getHistoryListById("564bfae1b0be4146bd6292732ca85e9c");
     }
 }

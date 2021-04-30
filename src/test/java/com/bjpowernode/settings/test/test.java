@@ -2,34 +2,29 @@ package com.bjpowernode.settings.test;
 
 public class test {
     public static void main(String[] args) {
-        //传统写法
-        /*
-        验证失效时间
-        //获取系统时间
-        Date date = new Date();
-        //时间格式
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String str=simpleDateFormat.format(date);
-        System.out.println(str);
-        */
-        /*
-        锁定时间测试
-        String lockTime = "0";
-        if (lockTime.equals("0")) {
-            System.out.println("异常账号锁定");
-        }*/
-        /*
-        ip拦截测试
-        String ip = "192.168.1.1";
-        String allowIps = "192.168.1.1,192.168.1.2";
-        if (allowIps.contains(ip)) {
-            System.out.println("允许登陆");
-        } else {
-            System.out.println("ip受限，请联系管理员");
-        }*/
-        /*
-        MD5加密密码测试
-        String MD5 = "123";
-        System.out.println(MD5Util.getMD5(MD5));*/
+        //冒泡排序算法
+        int array[] = {2, 3, 22, 31, 245};
+        int value = 20;
+        test test1 = new test();
+        System.out.println(test1.Go(array, value));
+    }
+    public int Go(int array[],int value){
+        int array1[] = array;
+        int value1 = value;
+        int low = 0;
+        int high = array1.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (array1[mid]==value1){
+                return mid;
+            }
+            if(value1<array1[mid]){
+                high =mid-1;
+            }
+            if (value1 > array1[mid]) {
+                low =mid+1;
+            }
+        }
+        return -1;
     }
 }
