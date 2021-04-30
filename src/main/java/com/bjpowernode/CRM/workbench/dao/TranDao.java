@@ -8,4 +8,6 @@ public interface TranDao {
     int save(Tran tran);
 
     Tran detail(String id);
+
+    int changeStage(Tran tran);
 }

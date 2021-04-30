@@ -20,6 +20,30 @@ public class TranServiceImpl implements TranService {
     private CustomerDao customerDao = SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
 
     @Override
+    public Boolean changeStage(Tran tran) {
+        boolean flag = true;
+        //改变交易阶段
+        int count1=tranDao.changeStage(tran);
+        if (count1 != 1) {
+            flag = false;
+        }
+        //阶段改变后，生成一条交易历史
+        TranHistory tranHistory = new TranHistory();
+        tranHistory.setId(UUIDUtil.getUUID());
+        tranHistory.setCreateBy(tran.getEditBy());
+        tranHistory.setCreateTime(DateTimeUtil.getSysTime());
+        tranHistory.setExpectedDate(tran.getExpectedDate());
+        tranHistory.setMoney(tran.getMoney());
+        tranHistory.setTranId(tran.getId());
+        //添加交易历史
+        int count2=tranHistoryDao.save(tranHistory);
+        if (count2!=1){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
     public List<TranHistory> getHistoryListById(String tranId) {
         List<TranHistory> list=tranHistoryDao.getHistoryListById(tranId);
         return list;
