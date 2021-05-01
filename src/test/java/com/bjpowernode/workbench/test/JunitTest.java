@@ -11,6 +11,7 @@ import com.bjpowernode.CRM.workbench.web.controller.TranController;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 public class JunitTest {
     //Junit单元测试以多线程方式进行测试，主要是测试业务层逻辑，控制器和Dao层一般来说是不用测的
@@ -19,6 +20,6 @@ public class JunitTest {
         /*ClueServiceImpl clueService = new ClueServiceImpl();
         clueService.convert("464072f8e0234409981c8940c9d6a506", null, "40f6cdea0bd34aceb77492a1656d9fb3");*/
         TranServiceImpl tranService = new TranServiceImpl();
-        tranService.getHistoryListById("564bfae1b0be4146bd6292732ca85e9c");
+        Map<String,Object> map = tranService.getCharts();
     }
 }
