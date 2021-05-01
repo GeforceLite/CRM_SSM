@@ -5,6 +5,16 @@
 
 <mapper namespace="com.bjpowernode.CRM.workbench.dao.TranDao">
 
+    <select id="getCharts" resultType="map">
+        select count(*) as value,stage as name
+        from tbl_tran
+        group by stage;
+    </select>
+
+    <select id="getTotal">
+        select count(*) from tbl_tran
+    </select>
+
     <update id="changeStage">
         update tbl_tran
         set stage=#{stage},
