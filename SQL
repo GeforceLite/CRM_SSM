@@ -1,0 +1,516 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_3306
+Source Server Version : 50536
+Source Host           : localhost:3306
+Source Database       : crm
+
+Target Server Type    : MYSQL
+Target Server Version : 50536
+File Encoding         : 65001
+
+Date: 2021-05-19 15:59:51
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `tbl_activity`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_activity`;
+CREATE TABLE `tbl_activity` (
+  `id` char(32) NOT NULL,
+  `owner` char(32) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `startDate` char(10) DEFAULT NULL,
+  `endDate` char(10) DEFAULT NULL,
+  `cost` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_activity
+-- ----------------------------
+INSERT INTO `tbl_activity` VALUES ('0145b4b7f9fe4bc1b63b7ed012ca55e7', 'zs', null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_activity` VALUES ('06b478adf36a442da261c0a616ae8c70', 'zs', null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_activity` VALUES ('21232c6b337e40f8a6a3abb2e8103696', '06f5fc056eac41558a964f96daa7f27c', '阿里宣发2', null, null, '123', '123', null, null, null, null);
+INSERT INTO `tbl_activity` VALUES ('308b81cba4ab446e8cfee544a896a449', '40f6cdea0bd34aceb77492a1656d9fb3', '新浪宣发', '2021-04-06', '2021-04-06', '123', '123', '2021', 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('35b98ab09a824f9ab47b756588397045', '40f6cdea0bd34aceb77492a1656d9fb3', '滴滴宣发1', null, null, '', '', '2021', 'cc', null, null);
+INSERT INTO `tbl_activity` VALUES ('4684d5f51b8a4164bda3fb1b5bd306ff', '40f6cdea0bd34aceb77492a1656d9fb3', '腾讯宣发1', null, null, '白嫖', '第一条记录', '2021', 'cc', null, null);
+INSERT INTO `tbl_activity` VALUES ('5dcb606805e74500bdec9c435997bc78', 'zs', null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_activity` VALUES ('5de1f694c8e2455cabb18a975663ede3', '40f6cdea0bd34aceb77492a1656d9fb3', '网易宣发', '请选择日期', '1899-12-19', '', '', '2021', 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('7439ce9ce81e42a7964dbd5f0271d62b', '40f6cdea0bd34aceb77492a1656d9fb3', '谷歌宣发', null, null, '123111', '12', '2021', 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('7633f0e4bcc749509fd5f4d41c2bc3a6', '40f6cdea0bd34aceb77492a1656d9fb3', '惠普宣发', '请选择日期', '请选择日期', '', '', '2021', 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('77209debb9cc40d1ac3210a5f1ac5ce2', '40f6cdea0bd34aceb77492a1656d9fb3', 'IBM宣发2', null, null, '1', '1', '1', 'cc', null, null);
+INSERT INTO `tbl_activity` VALUES ('7ff4478055384e4ea98e00a475954225', '40f6cdea0bd34aceb77492a1656d9fb3', '埃森哲宣发', '请选择日期', '请选择日期', '', '', null, 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('814725504c4444578d6f8cca5152925f', '40f6cdea0bd34aceb77492a1656d9fb3', '东软宣发', '2021-04-07', '2021-04-07', '666', '123', null, 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('a27a037ce5274daaafaf9c02ab1b0f29', 'zs', null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_activity` VALUES ('a8100a9e4ae34597a003f8412a8c00af', '40f6cdea0bd34aceb77492a1656d9fb3', '传单', '请选择日期', '1899-12-19', '', '', null, 'cc', '2021', '1');
+INSERT INTO `tbl_activity` VALUES ('d0eab52655984c28a4b5cbe74325a792', '40f6cdea0bd34aceb77492a1656d9fb3', '百度宣发1', null, null, '3000万', '百度2021年度宣发', null, null, null, null);
+INSERT INTO `tbl_activity` VALUES ('d28ce408d030438fb6487c2278663b56', 'zs', null, null, null, null, null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `tbl_activity_remark`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_activity_remark`;
+CREATE TABLE `tbl_activity_remark` (
+  `id` char(32) NOT NULL,
+  `noteContent` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editFlag` char(1) DEFAULT NULL COMMENT '0��ʾδ�޸ģ�1��ʾ���޸�',
+  `activityId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_activity_remark
+-- ----------------------------
+INSERT INTO `tbl_activity_remark` VALUES ('0b445ecde55b4e0c9d2307c5160e2651', '1', '2021-04-12 17:29:58', null, null, null, '0', '21232c6b337e40f8a6a3abb2e8103696');
+INSERT INTO `tbl_activity_remark` VALUES ('1ee3241387c7400ebd00c842849be7ed', '111', '2021-04-12 17:35:55', null, null, null, '0', '7633f0e4bcc749509fd5f4d41c2bc3a6');
+INSERT INTO `tbl_activity_remark` VALUES ('22a74fb3e92b46ecb1c3f6d1d42fbb63', '1', '2021-04-12 17:30:10', null, null, null, '0', '77209debb9cc40d1ac3210a5f1ac5ce2');
+INSERT INTO `tbl_activity_remark` VALUES ('2c258c06aa114cd19d55f2144a782d35', '1', '2021-04-12 17:40:31', null, null, null, '0', '5de1f694c8e2455cabb18a975663ede3');
+INSERT INTO `tbl_activity_remark` VALUES ('2f2b9cdcc0e94f1eb12831d483705bac', '1', '2021-04-12 17:29:49', null, null, null, '0', '308b81cba4ab446e8cfee544a896a449');
+INSERT INTO `tbl_activity_remark` VALUES ('3198d0369dee4de99d06dce239f53431', '1', '2021-04-12 17:30:07', null, null, null, '0', '308b81cba4ab446e8cfee544a896a449');
+INSERT INTO `tbl_activity_remark` VALUES ('4bffe01c49484a0f8fa462f9ce884d2e', '123', '2021-04-12 17:17:46', null, null, null, '0', '7633f0e4bcc749509fd5f4d41c2bc3a6');
+INSERT INTO `tbl_activity_remark` VALUES ('73982620624b474591fd2014be6d2149', '1', '2021-04-12 17:30:04', null, null, null, '0', 'd0eab52655984c28a4b5cbe74325a792');
+INSERT INTO `tbl_activity_remark` VALUES ('787b4bf8a1454e21a7b506a167dfe773', '1', '2021-04-12 17:30:12', null, null, null, '0', 'd0eab52655984c28a4b5cbe74325a792');
+INSERT INTO `tbl_activity_remark` VALUES ('7e23f76bc80b4dbe9129a6bd11a0676a', '111', '2021-04-12 17:35:51', null, null, null, '0', '7633f0e4bcc749509fd5f4d41c2bc3a6');
+INSERT INTO `tbl_activity_remark` VALUES ('8a2fedd1ce3b4c37aaa0373f1b24e21b', '谷歌宣发', '2021-04-12 17:11:49', null, null, null, '0', '7439ce9ce81e42a7964dbd5f0271d62b');
+INSERT INTO `tbl_activity_remark` VALUES ('8ca03aae6ae849748fd5296d8babda8b', '1', '2021-04-12 17:29:55', null, null, null, '0', '77209debb9cc40d1ac3210a5f1ac5ce2');
+INSERT INTO `tbl_activity_remark` VALUES ('aa0f7cd0a674442399710e6598adb9f6', '123', '2021-04-12 17:17:49', null, null, null, '0', '7633f0e4bcc749509fd5f4d41c2bc3a6');
+INSERT INTO `tbl_activity_remark` VALUES ('ac80fb9f0c8f474fa11cd204ea849dec', '百度最新内容', '2021-04-12 17:12:32', null, null, null, '0', 'd0eab52655984c28a4b5cbe74325a792');
+INSERT INTO `tbl_activity_remark` VALUES ('af9551eec3aa4f9b91418b43820e9f1c', '111', '2021-04-12 17:35:53', null, null, null, '0', '7633f0e4bcc749509fd5f4d41c2bc3a6');
+INSERT INTO `tbl_activity_remark` VALUES ('afbf40aad21f480981c90c381fe96c68', '测试1', '2021-04-12 18:48:50', null, '2021-04-12 19:16:07', '张三', '1', '35b98ab09a824f9ab47b756588397045');
+INSERT INTO `tbl_activity_remark` VALUES ('cf00377f82824215bd205890f01fb515', '1', '2021-04-12 17:30:00', null, null, null, '0', 'd0eab52655984c28a4b5cbe74325a792');
+
+-- ----------------------------
+-- Table structure for `tbl_clue`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_clue`;
+CREATE TABLE `tbl_clue` (
+  `id` char(32) NOT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
+  `appellation` varchar(255) DEFAULT NULL,
+  `owner` char(32) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `job` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `mphone` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `contactSummary` varchar(255) DEFAULT NULL,
+  `nextContactTime` char(10) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_clue
+-- ----------------------------
+INSERT INTO `tbl_clue` VALUES ('15a0936bb2a34d05a0f7f8b1e5844b79', 'wjl', '先生', '40f6cdea0bd34aceb77492a1656d9fb3', '万达', 'CEO', '123@qq.com', '123', '123', '123', '试图联系', 'web下载', '张三', '2021-04-17 20:06:47', null, null, '123', '123', null, '123');
+
+-- ----------------------------
+-- Table structure for `tbl_clue_activity_relation`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_clue_activity_relation`;
+CREATE TABLE `tbl_clue_activity_relation` (
+  `id` char(32) NOT NULL,
+  `clueId` char(32) DEFAULT NULL,
+  `activityId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_clue_activity_relation
+-- ----------------------------
+INSERT INTO `tbl_clue_activity_relation` VALUES ('11775dbe4b6e43098c1c7372f888cb4a', '15a0936bb2a34d05a0f7f8b1e5844b79', '35b98ab09a824f9ab47b756588397045');
+INSERT INTO `tbl_clue_activity_relation` VALUES ('11775dbe4b6e43098c1c7372f888cb4b', '15a0936bb2a34d05a0f7f8b1e5844b79', '308b81cba4ab446e8cfee544a896a449');
+INSERT INTO `tbl_clue_activity_relation` VALUES ('11775dbe4b6e43098c1c7372f888cb4c', '15a0936bb2a34d05a0f7f8b1e5844b79', '21232c6b337e40f8a6a3abb2e8103696');
+
+-- ----------------------------
+-- Table structure for `tbl_clue_remark`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_clue_remark`;
+CREATE TABLE `tbl_clue_remark` (
+  `id` char(32) NOT NULL,
+  `noteContent` varchar(255) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editFlag` char(1) DEFAULT NULL,
+  `clueId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_clue_remark
+-- ----------------------------
+INSERT INTO `tbl_clue_remark` VALUES ('06f5fc056eac41558a964f96daa7f27a', '干扰项', null, null, null, null, null, '15a0936bb2a34d05a0f7f8b1e5844b79');
+
+-- ----------------------------
+-- Table structure for `tbl_contacts`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_contacts`;
+CREATE TABLE `tbl_contacts` (
+  `id` char(32) NOT NULL,
+  `owner` char(32) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `customerId` char(32) DEFAULT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
+  `appellation` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `mphone` varchar(255) DEFAULT NULL,
+  `job` varchar(255) DEFAULT NULL,
+  `birth` char(10) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `contactSummary` varchar(255) DEFAULT NULL,
+  `nextContactTime` char(10) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_contacts
+-- ----------------------------
+INSERT INTO `tbl_contacts` VALUES ('2c0f56ca52e145929e8ed585773c0c40', '40f6cdea0bd34aceb77492a1656d9fb3', '11', null, '马云', '123', '11', '11', 'CEO', null, null, null, null, null, '1', null, '1', '1');
+INSERT INTO `tbl_contacts` VALUES ('996a18fad5de439a970bf12a7c33f59a', '40f6cdea0bd34aceb77492a1656d9fb3', '11', null, '马云', '123', '11', '11', 'CEO', null, null, null, null, null, '1', null, '1', '1');
+
+-- ----------------------------
+-- Table structure for `tbl_contacts_activity_relation`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_contacts_activity_relation`;
+CREATE TABLE `tbl_contacts_activity_relation` (
+  `id` char(32) NOT NULL,
+  `contactsId` char(32) DEFAULT NULL,
+  `activityId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_contacts_activity_relation
+-- ----------------------------
+INSERT INTO `tbl_contacts_activity_relation` VALUES ('61973076b5c2428b96b19a67cf30908f', '2c0f56ca52e145929e8ed585773c0c40', '814725504c4444578d6f8cca5152925f');
+INSERT INTO `tbl_contacts_activity_relation` VALUES ('7437860c88f647a89a978aa1128687c6', '996a18fad5de439a970bf12a7c33f59a', '814725504c4444578d6f8cca5152925f');
+INSERT INTO `tbl_contacts_activity_relation` VALUES ('75978b6cf293414d9d8366803b466eaf', '996a18fad5de439a970bf12a7c33f59a', '308b81cba4ab446e8cfee544a896a449');
+INSERT INTO `tbl_contacts_activity_relation` VALUES ('c598f48c3a6140ea921eafa5c0687da8', '2c0f56ca52e145929e8ed585773c0c40', '308b81cba4ab446e8cfee544a896a449');
+
+-- ----------------------------
+-- Table structure for `tbl_contacts_remark`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_contacts_remark`;
+CREATE TABLE `tbl_contacts_remark` (
+  `id` char(32) NOT NULL,
+  `noteContent` varchar(255) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editFlag` char(1) DEFAULT NULL,
+  `contactsId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_contacts_remark
+-- ----------------------------
+INSERT INTO `tbl_contacts_remark` VALUES ('08a044bc28294d449ccb168ef74c8339', '备注二', '张三', '2021-04-23 14:24:53', null, null, '0', '2c0f56ca52e145929e8ed585773c0c40');
+INSERT INTO `tbl_contacts_remark` VALUES ('251dcdc929554230aa897377d8056a3a', '备注三', '张三', '2021-04-23 14:12:44', null, null, '0', '996a18fad5de439a970bf12a7c33f59a');
+INSERT INTO `tbl_contacts_remark` VALUES ('726e6a934d844d5fbb78bc4f1ff8ef1b', '备注二', '张三', '2021-04-23 14:12:44', null, null, '0', '996a18fad5de439a970bf12a7c33f59a');
+INSERT INTO `tbl_contacts_remark` VALUES ('98020693f0924ef2b8c3de906f8049af', '备注三', '张三', '2021-04-23 14:24:53', null, null, '0', '2c0f56ca52e145929e8ed585773c0c40');
+INSERT INTO `tbl_contacts_remark` VALUES ('9939a353d73647acb6882d8d258f8d4c', '备注一', '张三', '2021-04-23 14:24:53', null, null, '0', '2c0f56ca52e145929e8ed585773c0c40');
+INSERT INTO `tbl_contacts_remark` VALUES ('a784444953f14796bbc57f9919a1c736', '备注一', '张三', '2021-04-23 14:12:44', null, null, '0', '996a18fad5de439a970bf12a7c33f59a');
+INSERT INTO `tbl_contacts_remark` VALUES ('b9fb62a93b024f59811b885fa1ac36d3', '备注四', '张三', '2021-04-23 14:24:53', null, null, '0', '2c0f56ca52e145929e8ed585773c0c40');
+INSERT INTO `tbl_contacts_remark` VALUES ('e99bb969b0bb4189bcf2aad6e5d0eacf', '备注四', '张三', '2021-04-23 14:12:44', null, null, '0', '996a18fad5de439a970bf12a7c33f59a');
+
+-- ----------------------------
+-- Table structure for `tbl_customer`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_customer`;
+CREATE TABLE `tbl_customer` (
+  `id` char(32) NOT NULL,
+  `owner` char(32) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `contactSummary` varchar(255) DEFAULT NULL,
+  `nextContactTime` char(10) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_customer
+-- ----------------------------
+INSERT INTO `tbl_customer` VALUES ('28ce2b69337942d594c256e0a7f10e64', '40f6cdea0bd34aceb77492a1656d9fb3', '', null, null, null, null, null, null, '', '', null, null);
+INSERT INTO `tbl_customer` VALUES ('dcd1a33b8fe54e25ad5c14b6ef2bf851', null, '阿里巴巴4', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_customer` VALUES ('dcd1a33b8fe54e25ad5c14b6ef2bf852', '40f6cdea0bd34aceb77492a1656d9fb3', 'al', null, '1111', null, null, null, null, '1', '1', '1', '1');
+INSERT INTO `tbl_customer` VALUES ('dcd1a33b8fe54e25ad5c14b6ef2bf853', null, '阿里巴巴3', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_customer` VALUES ('dcd1a33b8fe54e25ad5c14b6ef2bf854', null, '阿里巴巴2', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_customer` VALUES ('dcd1a33b8fe54e25ad5c14b6ef2bf855', null, '阿里巴巴1', null, null, null, null, null, null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `tbl_customer_remark`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_customer_remark`;
+CREATE TABLE `tbl_customer_remark` (
+  `id` char(32) NOT NULL,
+  `noteContent` varchar(255) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editFlag` char(1) DEFAULT NULL,
+  `customerId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_customer_remark
+-- ----------------------------
+INSERT INTO `tbl_customer_remark` VALUES ('01fa592e08294916aaa4daee309418f3', '备注四', '张三', '2021-04-23 14:12:44', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('225a51b13a5b4226b45757605b980429', '备注二', '张三', '2021-04-23 14:24:53', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('3f9e7cf0f8fe4ba393e5e96d1dcb2af2', '备注三', '张三', '2021-04-23 14:12:44', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('a460d1bcb59b4c7bb36769a7709d87bb', '备注一', '张三', '2021-04-23 14:24:53', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('b019104cb74e4b9cb0be5e1c1e89d3bb', '备注四', '张三', '2021-04-23 14:24:53', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('b7bbd796dce7419a8945417241683f0d', '备注二', '张三', '2021-04-23 14:12:44', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('d4107f7bfaab4f03b469fc87bcd119f1', '备注一', '张三', '2021-04-23 14:12:44', null, null, '0', null);
+INSERT INTO `tbl_customer_remark` VALUES ('faf21d1054394f9fb2864a5ad5d68cd1', '备注三', '张三', '2021-04-23 14:24:53', null, null, '0', null);
+
+-- ----------------------------
+-- Table structure for `tbl_dic_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_dic_type`;
+CREATE TABLE `tbl_dic_type` (
+  `code` varchar(255) NOT NULL COMMENT '����������������Ϊ�գ����ܺ������ġ�',
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_dic_type
+-- ----------------------------
+INSERT INTO `tbl_dic_type` VALUES ('appellation', '称呼', '');
+INSERT INTO `tbl_dic_type` VALUES ('clueState', '线索状态', '');
+INSERT INTO `tbl_dic_type` VALUES ('returnPriority', '回访优先级', '');
+INSERT INTO `tbl_dic_type` VALUES ('returnState', '回访状态', '');
+INSERT INTO `tbl_dic_type` VALUES ('source', '来源', '');
+INSERT INTO `tbl_dic_type` VALUES ('stage', '阶段', '');
+INSERT INTO `tbl_dic_type` VALUES ('transactionType', '交易类型', '');
+
+-- ----------------------------
+-- Table structure for `tbl_dic_value`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_dic_value`;
+CREATE TABLE `tbl_dic_value` (
+  `id` char(32) NOT NULL COMMENT '����������UUID',
+  `value` varchar(255) DEFAULT NULL COMMENT '����Ϊ�գ�����Ҫ��ͬһ���ֵ��������ֵ�ֵ�����ظ�������Ψһ�ԡ�',
+  `text` varchar(255) DEFAULT NULL COMMENT '����Ϊ��',
+  `orderNo` varchar(255) DEFAULT NULL COMMENT '����Ϊ�գ�����Ϊ�յ�ʱ��Ҫ�������������',
+  `typeCode` varchar(255) DEFAULT NULL COMMENT '���',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_dic_value
+-- ----------------------------
+INSERT INTO `tbl_dic_value` VALUES ('06e3cbdf10a44eca8511dddfc6896c55', '虚假线索', '虚假线索', '4', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('0fe33840c6d84bf78df55d49b169a894', '销售邮件', '销售邮件', '8', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('12302fd42bd349c1bb768b19600e6b20', '交易会', '交易会', '11', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('1615f0bb3e604552a86cde9a2ad45bea', '最高', '最高', '2', 'returnPriority');
+INSERT INTO `tbl_dic_value` VALUES ('176039d2a90e4b1a81c5ab8707268636', '教授', '教授', '5', 'appellation');
+INSERT INTO `tbl_dic_value` VALUES ('1e0bd307e6ee425599327447f8387285', '将来联系', '将来联系', '2', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('2173663b40b949ce928db92607b5fe57', '丢失线索', '丢失线索', '5', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('2876690b7e744333b7f1867102f91153', '未启动', '未启动', '1', 'returnState');
+INSERT INTO `tbl_dic_value` VALUES ('29805c804dd94974b568cfc9017b2e4c', '07成交', '07成交', '7', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('310e6a49bd8a4962b3f95a1d92eb76f4', '试图联系', '试图联系', '1', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('31539e7ed8c848fc913e1c2c93d76fd1', '博士', '博士', '4', 'appellation');
+INSERT INTO `tbl_dic_value` VALUES ('37ef211719134b009e10b7108194cf46', '01资质审查', '01资质审查', '1', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('391807b5324d4f16bd58c882750ee632', '08丢失的线索', '08丢失的线索', '8', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('3a39605d67da48f2a3ef52e19d243953', '聊天', '聊天', '14', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('474ab93e2e114816abf3ffc596b19131', '低', '低', '3', 'returnPriority');
+INSERT INTO `tbl_dic_value` VALUES ('48512bfed26145d4a38d3616e2d2cf79', '广告', '广告', '1', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('4d03a42898684135809d380597ed3268', '合作伙伴研讨会', '合作伙伴研讨会', '9', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('59795c49896947e1ab61b7312bd0597c', '先生', '先生', '1', 'appellation');
+INSERT INTO `tbl_dic_value` VALUES ('5c6e9e10ca414bd499c07b886f86202a', '高', '高', '1', 'returnPriority');
+INSERT INTO `tbl_dic_value` VALUES ('67165c27076e4c8599f42de57850e39c', '夫人', '夫人', '2', 'appellation');
+INSERT INTO `tbl_dic_value` VALUES ('68a1b1e814d5497a999b8f1298ace62b', '09因竞争丢失关闭', '09因竞争丢失关闭', '9', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('6b86f215e69f4dbd8a2daa22efccf0cf', 'web调研', 'web调研', '13', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('72f13af8f5d34134b5b3f42c5d477510', '合作伙伴', '合作伙伴', '6', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('7c07db3146794c60bf975749952176df', '未联系', '未联系', '6', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('86c56aca9eef49058145ec20d5466c17', '内部研讨会', '内部研讨会', '10', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('9095bda1f9c34f098d5b92fb870eba17', '进行中', '进行中', '3', 'returnState');
+INSERT INTO `tbl_dic_value` VALUES ('954b410341e7433faa468d3c4f7cf0d2', '已有业务', '已有业务', '1', 'transactionType');
+INSERT INTO `tbl_dic_value` VALUES ('966170ead6fa481284b7d21f90364984', '已联系', '已联系', '3', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('96b03f65dec748caa3f0b6284b19ef2f', '推迟', '推迟', '2', 'returnState');
+INSERT INTO `tbl_dic_value` VALUES ('97d1128f70294f0aac49e996ced28c8a', '新业务', '新业务', '2', 'transactionType');
+INSERT INTO `tbl_dic_value` VALUES ('9ca96290352c40688de6596596565c12', '完成', '完成', '4', 'returnState');
+INSERT INTO `tbl_dic_value` VALUES ('9e6d6e15232549af853e22e703f3e015', '需要条件', '需要条件', '7', 'clueState');
+INSERT INTO `tbl_dic_value` VALUES ('9ff57750fac04f15b10ce1bbb5bb8bab', '02需求分析', '02需求分析', '2', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('a70dc4b4523040c696f4421462be8b2f', '等待某人', '等待某人', '5', 'returnState');
+INSERT INTO `tbl_dic_value` VALUES ('a83e75ced129421dbf11fab1f05cf8b4', '推销电话', '推销电话', '2', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('ab8472aab5de4ae9b388b2f1409441c1', '常规', '常规', '5', 'returnPriority');
+INSERT INTO `tbl_dic_value` VALUES ('ab8c2a3dc05f4e3dbc7a0405f721b040', '05提案/报价', '05提案/报价', '5', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('b924d911426f4bc5ae3876038bc7e0ad', 'web下载', 'web下载', '12', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('c13ad8f9e2f74d5aa84697bb243be3bb', '03价值建议', '03价值建议', '3', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('c83c0be184bc40708fd7b361b6f36345', '最低', '最低', '4', 'returnPriority');
+INSERT INTO `tbl_dic_value` VALUES ('db867ea866bc44678ac20c8a4a8bfefb', '员工介绍', '员工介绍', '3', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('e44be1d99158476e8e44778ed36f4355', '04确定决策者', '04确定决策者', '4', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('e5f383d2622b4fc0959f4fe131dafc80', '女士', '女士', '3', 'appellation');
+INSERT INTO `tbl_dic_value` VALUES ('e81577d9458f4e4192a44650a3a3692b', '06谈判/复审', '06谈判/复审', '6', 'stage');
+INSERT INTO `tbl_dic_value` VALUES ('fb65d7fdb9c6483db02713e6bc05dd19', '在线商场', '在线商场', '5', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('fd677cc3b5d047d994e16f6ece4d3d45', '公开媒介', '公开媒介', '7', 'source');
+INSERT INTO `tbl_dic_value` VALUES ('ff802a03ccea4ded8731427055681d48', '外部介绍', '外部介绍', '4', 'source');
+
+-- ----------------------------
+-- Table structure for `tbl_tran`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_tran`;
+CREATE TABLE `tbl_tran` (
+  `id` char(32) NOT NULL,
+  `owner` char(32) DEFAULT NULL,
+  `money` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `expectedDate` char(10) DEFAULT NULL,
+  `customerId` char(32) DEFAULT NULL,
+  `stage` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `activityId` char(32) DEFAULT NULL,
+  `contactsId` char(32) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `contactSummary` varchar(255) DEFAULT NULL,
+  `nextContactTime` char(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_tran
+-- ----------------------------
+INSERT INTO `tbl_tran` VALUES ('564bfae1b0be4146bd6292732ca85e9c', '40f6cdea0bd34aceb77492a1656d9fb3', '', '', '', '28ce2b69337942d594c256e0a7f10e64', '01资质审查', '', '', '1d598ac0910a4a2ebb262b0a27eae7cc', '620619cd4710405aaa14c049cd071e1c', '张三', '2021-04-25 14:19:33', null, null, '', '', '');
+INSERT INTO `tbl_tran` VALUES ('b88302132fac4c2581629d3ea0a31932', '40f6cdea0bd34aceb77492a1656d9fb3', '11', 'abc', null, null, '02交易沟通', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `tbl_tran` VALUES ('b88302132fac4c2581629d3ea0a319d1', '40f6cdea0bd34aceb77492a1656d9fb3', '', '', '', '28ce2b69337942d594c256e0a7f10e64', '01资质审查', '', '', '1d598ac0910a4a2ebb262b0a27eae7cc', '620619cd4710405aaa14c049cd071e1c', '张三', '2021-04-25 12:11:47', null, null, '', '', '');
+INSERT INTO `tbl_tran` VALUES ('c8fb5b02fdc042e1bebe61be51356e4d', '40f6cdea0bd34aceb77492a1656d9fb3', '50', 'geforcelite', '2021-04-28', 'dcd1a33b8fe54e25ad5c14b6ef2bf851', '06谈判/复审', '新业务', '广告', '1d598ac0910a4a2ebb262b0a27eae7cc', '620619cd4710405aaa14c049cd071e1c', '张三', '2021-04-25 14:19:10', '张三', '2021-04-30 21:48:36', '123333', '123333', '2021-04-21');
+
+-- ----------------------------
+-- Table structure for `tbl_tran_history`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_tran_history`;
+CREATE TABLE `tbl_tran_history` (
+  `id` char(32) NOT NULL,
+  `stage` varchar(255) DEFAULT NULL,
+  `money` varchar(255) DEFAULT NULL,
+  `expectedDate` char(10) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `tranId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_tran_history
+-- ----------------------------
+INSERT INTO `tbl_tran_history` VALUES ('0ee84cf9bfb54f6c967668bb465c99ba', null, '50', '2021-04-28', '2021-04-30 21:25:13', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('2e1c5d1980194cc7bc26608dc6b9c684', '', '', '', '2021-04-25 14:19:33', '张三', '564bfae1b0be4146bd6292732ca85e9c');
+INSERT INTO `tbl_tran_history` VALUES ('3096c40abb5d48f792341e24315010c8', null, '50', '2021-04-28', '2021-04-30 21:46:21', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('331e8386ae1749148fd0b76537df8684', null, '50', '2021-04-28', '2021-04-30 21:25:13', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('3b531fe4027c4a3d9bf36d433f31b27b', null, '50', '2021-04-28', '2021-04-30 21:25:13', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('4405a75d7dc44c1db7a62f92cb166e24', null, '50', '2021-04-28', '2021-04-30 21:25:14', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('441f9eecf270401b8d9c97c09f25ca5d', null, '50', '2021-04-28', '2021-04-30 21:46:27', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('4f5793187fcf41abbbd083c5651ab174', null, '50', '2021-04-28', '2021-04-30 21:46:39', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('5b3e35a3c78740c5b1c341bca5ca838f', null, '50', '2021-04-28', '2021-04-30 21:23:37', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('5e0688a7e9e84e5fa1166bca79e8cdec', null, '50', '2021-04-28', '2021-04-30 21:46:27', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('61542d1fe0da484db69871cbc588f9e4', null, '50', '2021-04-28', '2021-04-30 21:24:42', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('6877b5e98381492bb3163edfb79cf438', null, '50', '2021-04-28', '2021-04-30 21:25:13', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('6a8e78c34b42468ca448d41d8b83f2f3', null, '50', '2021-04-28', '2021-04-30 21:25:12', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('6e7a756e29a1421ea5693cf878ea36c6', null, '50', '2021-04-28', '2021-04-30 21:48:36', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('73d446a0faf0493f89aa0020b62a320c', null, '50', '2021-04-28', '2021-04-30 21:46:27', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('75245d566da84e05862b10a09cfb9925', null, '50', '2021-04-28', '2021-04-30 21:25:13', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('77b7f47a7e2b47f9bd81586a48e95b11', null, '50', '2021-04-28', '2021-04-30 21:46:27', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('7ad842ca389846a89ebe06391a54daaf', null, '50', '2021-04-28', '2021-04-30 21:25:14', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('886f86d6dc6a45d8935246f58ef71983', null, '50', '2021-04-28', '2021-04-30 21:46:25', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('88f13a33784a4233b6dfd1472daadf4d', null, '50', '2021-04-28', '2021-04-30 21:46:36', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('8f59ab0955df47f987ce0886337f0162', '07成交', '50', '2021-04-28', '2021-04-25 14:19:10', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('9fbae56b3188453eb9001e03cd80acbd', null, '50', '2021-04-28', '2021-04-30 21:24:41', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('b46f9fc8cece48e4804f13c0dc04e927', null, '50', '2021-04-28', '2021-04-30 21:46:31', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('b85d99b462de47058839168a263eacd3', '', '', '', '2021-04-25 12:11:47', '张三', 'b88302132fac4c2581629d3ea0a319d1');
+INSERT INTO `tbl_tran_history` VALUES ('bab679dd122243e3961eadd424823012', null, '50', '2021-04-28', '2021-04-30 21:25:13', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('d99639a10dcf416599f09449320acc80', null, '50', '2021-04-28', '2021-04-30 21:25:18', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+INSERT INTO `tbl_tran_history` VALUES ('ead790baf150435582bc024dc9579c89', null, '50', '2021-04-28', '2021-04-30 21:24:41', '张三', 'c8fb5b02fdc042e1bebe61be51356e4d');
+
+-- ----------------------------
+-- Table structure for `tbl_tran_remark`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_tran_remark`;
+CREATE TABLE `tbl_tran_remark` (
+  `id` char(32) NOT NULL,
+  `noteContent` varchar(255) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `createTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editFlag` char(1) DEFAULT NULL,
+  `tranId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_tran_remark
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tbl_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_user`;
+CREATE TABLE `tbl_user` (
+  `id` char(32) NOT NULL COMMENT 'uuid\r\n            ',
+  `loginAct` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `loginPwd` varchar(255) DEFAULT NULL COMMENT '���벻�ܲ������Ĵ洢���������ģ�MD5����֮�������',
+  `email` varchar(255) DEFAULT NULL,
+  `expireTime` char(19) DEFAULT NULL COMMENT 'ʧЧʱ��Ϊ�յ�ʱ���ʾ����ʧЧ��ʧЧʱ��Ϊ2018-10-10 10:10:10�����ʾ�ڸ�ʱ��֮ǰ���˻����á�',
+  `lockState` char(1) DEFAULT NULL COMMENT '����״̬Ϊ��ʱ��ʾ���ã�Ϊ0ʱ��ʾ������Ϊ1ʱ��ʾ���á�',
+  `deptno` char(4) DEFAULT NULL,
+  `allowIps` varchar(255) DEFAULT NULL COMMENT '������ʵ�IPΪ��ʱ��ʾIP��ַ�������ޣ�������ʵ�IP������һ����Ҳ�����Ƕ���������IP��ַ��ʱ�򣬲��ð�Ƕ��ŷָ������IP��192.168.100.2����ʾ���û�ֻ����IP��ַΪ192.168.100.2�Ļ�����ʹ�á�',
+  `createTime` char(19) DEFAULT NULL,
+  `createBy` varchar(255) DEFAULT NULL,
+  `editTime` char(19) DEFAULT NULL,
+  `editBy` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_user
+-- ----------------------------
+INSERT INTO `tbl_user` VALUES ('06f5fc056eac41558a964f96daa7f27c', 'ls', '李四', '202cb962ac59075b964b07152d234b70', 'ls@163.com', '2099-11-27 21:50:05', '1', 'A001', '192.168.1.1,127.0.0.1,0:0:0:0:0:0:0:1', '2018-11-22 12:11:40', '李四', null, null);
+INSERT INTO `tbl_user` VALUES ('40f6cdea0bd34aceb77492a1656d9fb3', 'zs', '张三', '202cb962ac59075b964b07152d234b70', 'zs@qq.com', '2099-11-30 23:50:55', '1', 'A001', '192.168.1.1,192.168.1.2,127.0.0.1,0:0:0:0:0:0:0:1', '2018-11-22 11:37:34', '张三', null, null);
